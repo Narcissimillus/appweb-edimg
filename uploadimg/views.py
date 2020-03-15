@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, Flask, flash, request, redirect, url_for, send_from_directory
+from flask import Blueprint, render_template, Flask, flash, request, redirect, url_for, send_from_directory, jsonify
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from PIL import Image, ImageOps
 
@@ -15,15 +15,16 @@ configure_uploads(apk, photos)
 def upload():
     if request.method == 'POST' and 'image' in request.files:
         filename = photos.save(request.files['image'])
-        im_gray = rgb2gray(filename)
-        return render_template('uploaded.html', image_url = "uploads/"+filename, image_url_gray = "uploads/"+im_gray)
+        #im_gray = rgb2gray(filename)
+        rendered = render_template('uploaded.html', image_url = "uploads/"+filename)
+        return jsonify({'rendered':rendered})
     return render_template('upload.html')
 
 def rgb2gray(filename):
     image_src = 'static/uploads/'+filename
-    new_filename = 'gray_'+filename
+    #new_filename = 'gray_'+filename
     im = Image.open(image_src)
     imm = ImageOps.grayscale(im)
-    imm.save('static/uploads/'+new_filename)
-    return new_filename
+    #imm.save('static/uploads/'+new_filename)
+    return imm
 
