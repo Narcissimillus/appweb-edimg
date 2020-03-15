@@ -6,8 +6,23 @@
 
 {% block body %}
 <h1> Upload new image </h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=image>
-      <input type=submit value=Upload>
-    </form>
+<form method=post enctype=multipart/form-data>
+    <input type=file name=image>
+    <input type=submit id="btn" value=Upload>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready( function() {
+            // var photo = {{url_for('static', filename = image_url)}}
+            $("#btn").click(function(){
+                $.ajax({
+                url: '/uploadimg',
+                type: 'get',
+                success: function(data) {
+                    console.log(data);
+                }, 
+            });
+            });
+        });
+    </script>
 {% endblock %}
