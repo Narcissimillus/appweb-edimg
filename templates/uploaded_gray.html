@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Upload</title>
+{% endblock %}
+
+{% block body %}
+<h1> Uploaded </h1>
+    <img id="img" src="{{url_for('static', filename = image_url_gray)}}">
+    <br/>
+{% endblock %}
