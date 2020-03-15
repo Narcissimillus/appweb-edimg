@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, Flask, flash, request, redirect, url_for, send_from_directory
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from PIL import Image, ImageOps
-from numpy import asarray
 
 uploadimg = Blueprint('uploadimg', __name__, template_folder='templates')
 
