@@ -6,23 +6,48 @@
 
 {% block body %}
 <h1> Upload new image </h1>
-<form method=post enctype=multipart/form-data>
-    <input type=file name=image>
-    <input type=submit id="btn" value=Upload>
+<!-- <input type=file name=image>
+<button type=button id="btn" value=Upload>Upload</button> -->
+
+<form id="FileForm" name="file" enctype="multipart/form-data">
+    <input type="file" name="file" id="File" />
+    <input type="button" name="submit" value="submit" onclick="ProcessImage()" />
 </form>
+
+<img id="display_image" src="">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
-        $(document).ready( function() {
-            // var photo = {{url_for('static', filename = image_url)}}
-            $("#btn").click(function(){
-                $.ajax({
+        // $(document).ready( function() {
+        //     // var photo = {{url_for('static', filename = image_url)}}
+        //     $("#btn").click(function(){
+        //         $.ajax({
+        //         url: '/uploadimg',
+        //         type: 'post',
+        //         success: function(data) {
+        //             console.log(data);
+        //         }, 
+        //     });
+        //     });
+        // });
+        function ProcessImage()
+        {
+            var formDataRaw = $('#FileForm')[0];
+            var form_data = new FormData(formDataRaw);
+            console.log(form_data)
+            $.ajax({
+                type: 'POST',
                 url: '/uploadimg',
-                type: 'get',
-                success: function(data) {
-                    console.log(data);
-                }, 
+                data: form_data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                async: false,
+                success: function (data) {
+                    console.log(data.image_url);
+                    $("#display_image").attr("src","static/"+data.image_url);
+                },
             });
-            });
-        });
+        }
     </script>
 {% endblock %}
