@@ -2,52 +2,52 @@
 
 {% block head %}
 <title>Upload</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 {% endblock %}
 
 {% block body %}
-<h1> Upload new image </h1>
-<!-- <input type=file name=image>
-<button type=button id="btn" value=Upload>Upload</button> -->
-
-<form id="FileForm" name="file" enctype="multipart/form-data">
-    <input type="file" name="file" id="File" />
+<h1  id="header"> Upload new image </h1>
+<form id="FileForm" name="imgfile" enctype="multipart/form-data">
+    <input type="file" name="imgfile" id="imgfile" />
     <input type="button" name="submit" value="submit" onclick="ProcessImage()" />
 </form>
 
 <img id="display_image" src="">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script>
-        // $(document).ready( function() {
-        //     // var photo = {{url_for('static', filename = image_url)}}
-        //     $("#btn").click(function(){
-        //         $.ajax({
-        //         url: '/uploadimg',
-        //         type: 'post',
-        //         success: function(data) {
-        //             console.log(data);
-        //         }, 
-        //     });
-        //     });
-        // });
-        function ProcessImage()
-        {
-            var formDataRaw = $('#FileForm')[0];
-            var form_data = new FormData(formDataRaw);
-            console.log(form_data)
-            $.ajax({
-                type: 'POST',
-                url: '/uploadimg',
-                data: form_data,
-                contentType: false,
-                cache: false,
-                processData: false,
-                async: false,
-                success: function (data) {
-                    console.log(data.image_url);
-                    $("#display_image").attr("src","static/"+data.image_url);
-                },
-            });
-        }
-    </script>
+<div id="panel">
+
+</div>
+
+<script>
+    function ProcessImage(){
+        var formDataRaw = $('#FileForm')[0];
+        var form_data = new FormData(formDataRaw);
+        console.log(form_data)
+        $.ajax({
+            type: 'POST',
+            url: '/uploadimg',
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            async: false,
+            success: function(data){
+                $("#header").text("Uploaded");
+                $("#FileForm").hide();
+                $("#display_image").attr("src",data.image_url);
+                $("#panel").append(data.rendered)
+            },
+        });
+    };
+    function rgb2gray(){
+        $.ajax({
+            type: 'POST',
+            url: '/uploadimg',
+            success: function(resp){
+                console.log(resp.image_url_gray);
+                $("#display_imgge").attr("src",resp.image_url_gray);
+            },
+        });
+    };
+</script>
 {% endblock %}

@@ -1,13 +1,12 @@
 from flask import Flask, Blueprint, render_template, request, url_for
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from uploadimg.views import uploadimg
-#from process_image.views import process_image
+from rgb_to_gray.views import rgb_to_gray
 
 app = Flask(__name__)
 
 app.register_blueprint(uploadimg)
-
-#app.register_blueprint(process_image)
+app.register_blueprint(rgb_to_gray)
 
 photos = UploadSet('photos', IMAGES)
 
