@@ -39,15 +39,5 @@
             },
         });
     };
-    function rgb2gray(){
-        $.ajax({
-            type: 'POST',
-            url: '/uploadimg',
-            success: function(resp){
-                console.log(resp.image_url_gray);
-                $("#display_imgge").attr("src",resp.image_url_gray);
-            },
-        });
-    };
 </script>
 {% endblock %}

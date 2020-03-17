@@ -27,7 +27,7 @@ def upload():
             print(e)
         image_url = "static/uploads/"+filename
         return jsonify({'image_url' : image_url,
-                        'rendered': render_template('rgb2gray.html')})
+                        'rendered': render_template('panel.html')})
     else:
         return render_template('upload.html')
 

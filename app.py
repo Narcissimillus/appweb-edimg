@@ -2,11 +2,13 @@ from flask import Flask, Blueprint, render_template, request, url_for
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from uploadimg.views import uploadimg
 from rgb_to_gray.views import rgb_to_gray
+from gray_to_binary.views import gray_to_binary
 
 app = Flask(__name__)
 
 app.register_blueprint(uploadimg)
 app.register_blueprint(rgb_to_gray)
+app.register_blueprint(gray_to_binary)
 
 photos = UploadSet('photos', IMAGES)
 

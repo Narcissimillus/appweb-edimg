@@ -1,0 +1,31 @@
+<button id="rgb2gray">RGB2GRAY</button>
+<button id="im2bw">IM2BW</button>
+<script>
+    $('#rgb2gray').click(function(){
+        $.ajax({
+            type: 'POST',
+            url: '/rgb_to_gray',
+            success: function(resp){
+                // console.log(resp.image_url_gray);
+                $("#display_image").attr("src",resp.image_url_gray);
+            },
+        });
+    });
+    $('#im2bw').click(function(){
+        var prag = prompt("Dati un prag cu valoare cuprinsa intre 0 si 255:");
+        if (prag > 255){
+            prag = 255;
+        }
+        else prag = 0;
+        $.ajax({
+            type: 'POST',
+            url: '/gray_to_binary',
+            data: JSON.stringify(prag),
+            dataType: "json",
+            success: function(resp){
+                console.log(resp.image_url_bw);
+                $("#display_image").attr("src",resp.image_url_bw);
+            },
+        });
+    });
+</script>
