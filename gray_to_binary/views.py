@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, Flask, flash, request, redirect, url_for, send_from_directory, jsonify
-#from flask_uploads import UploadSet, configure_uploads, IMAGES
-from PIL import Image, ImageOps
+from PIL import Image
+from delete_processed_images.views import delete_images
 import numpy as np
+import datetime
 import os
 
 gray_to_binary = Blueprint('gray_to_binary', __name__, template_folder='templates')
@@ -10,13 +11,18 @@ gray_to_binary = Blueprint('gray_to_binary', __name__, template_folder='template
 def im2bw():
     if request.method == "POST":
         try:
-            if os.path.exists("static/uploads/img_processed.jpg"):
-                os.remove("static/uploads/img_processed.jpg")
+            delete_images()
             image_src = 'static/uploads/img.jpg'
             im = Image.open(image_src).convert(mode="L")
-            # im.save('static/uploads/img_processed.jpg')
             pixels = np.array(im)
-            prag = request.prompt['prag']
+            text = request.get_data().decode('UTF-8')
+            textsplit = text.split('.')
+            prag = int(textsplit[0])
+            count = textsplit[1]+".jpg"
+            del_img = str(int(textsplit[1])-1)+".jpg"
+            if os.path.exists("static/uploads/" + del_img):
+                os.remove("static/uploads/" + del_img)
+            print(prag, count)
             [x, y] = pixels.shape
             for i in range(x):
                 for j in range(y):
@@ -25,8 +31,9 @@ def im2bw():
                     else:
                         pixels[i][j] = 0
             im_bw = Image.fromarray(pixels)
-            im_bw.save('static/uploads/img_bw.jpg')
-            image_url_bw= url_for('static',filename="uploads/img_bw.jpg")
+            # time = datetime.datetime.now().strftime("%H-%M-%S-%f")+".jpg"
+            im_bw.save('static/uploads/' + count)
+            image_url_bw= url_for('static',filename="uploads/" + count)
             return jsonify({'image_url_bw' : image_url_bw})
         except Exception as e:
             print(e)

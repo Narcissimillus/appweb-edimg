@@ -6,26 +6,38 @@
             type: 'POST',
             url: '/rgb_to_gray',
             success: function(resp){
-                // console.log(resp.image_url_gray);
                 $("#display_image").attr("src",resp.image_url_gray);
             },
         });
     });
-    $('#im2bw').click(function(){
-        var prag = prompt("Dati un prag cu valoare cuprinsa intre 0 si 255:");
-        if (prag > 255){
-            prag = 255;
-        }
-        else prag = 0;
-        $.ajax({
-            type: 'POST',
-            url: '/gray_to_binary',
-            data: JSON.stringify(prag),
-            dataType: "json",
-            success: function(resp){
-                console.log(resp.image_url_bw);
-                $("#display_image").attr("src",resp.image_url_bw);
-            },
+    (function(){
+        var count = 0;
+        $('#im2bw').click(function(){
+            count += 1;
+            var prag = prompt("Dati un prag cu valoare cuprinsa intre 0 si 255:");
+            // if(Number.isInteger(parseInt(prag)))
+            //     console.log(prag);
+            // else
+            //     console.log(Number.isInteger(parseInt(prag));
+            if (parseInt(prag) > 255)
+                prag = "255";
+            else
+                if(parseInt(prag) < 0)
+                    prag = "0";
+                else
+                    if(parseInt(prag) > 0 && parseInt(prag) < 255){
+                        //pass
+                    }
+                    else prag = "255"
+            $.ajax({
+                type: 'POST',
+                url: '/gray_to_binary',
+                data: prag + "." + count,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                success: function(resp){
+                    $("#display_image").attr("src",resp.image_url_bw);
+                },
+            });
         });
-    });
+    })();
 </script>

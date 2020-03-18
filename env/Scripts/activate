@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\xampp\htdocs\appweb_edimg\env"
+VIRTUAL_ENV="C:\Users\Narcis\Desktop\github\appweb-edimg\env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
