@@ -1,0 +1,56 @@
+	    # Nu merge cum ar trebui!!!
+	    # im = Image.open(image_src).convert(mode="L")            
+	    # pixels = np.array(im)
+            # 2D-array
+            # [x, y] = pixels.shape
+            # pixels[0][0] = round((pixels[0][0] + pixels[0][1] + pixels[1][0] + pixels[1][1])/9)
+            # pixels[0][y-1] = round((pixels[0][y-2] + pixels[0][y-1] + pixels[1][y-2] + pixels[1][y-1])/9)
+            # pixels[x-1][0] = round((pixels[x-2][0] + pixels[x-2][1] + pixels[x-1][0] + pixels[x-1][1])/9)
+            # pixels[x-1][y-1] = round((pixels[x-2][y-2] + pixels[x-2][y-1] + pixels[x-1][y-2] + pixels[x-1][y-1])/9)
+            # for i in range(1,x-1):
+            #     pixels[i][0] = round((pixels[i-1][0] + pixels[i-1][1] + 
+            #     pixels[i][0] + pixels[i][1] + 
+            #     pixels[i+1][0] + pixels[i+1][1])/9)
+            #     #
+            #     pixels[i][y-1] = round((pixels[i-1][y-2] + pixels[i-1][y-1] + 
+            #     pixels[i][y-2] + pixels[i][y-1] + 
+            #     pixels[i+1][y-2] + pixels[i+1][y-1])/9)
+            # for j in range(1,y-1):
+            #     pixels[0][j] = round((pixels[0][j-1] + pixels[0][j] + pixels[0][j+1] + 
+            #     pixels[1][j-1] + pixels[1][j] + pixels[1][j+1])/9)
+            #     #
+            #     pixels[x-1][j] = round((pixels[x-2][j-1] + pixels[x-2][j] + pixels[x-2][j+1] + 
+            #     pixels[x-1][j-1] + pixels[x-1][j] + pixels[x-1][j+1])/9)
+            # for i in range(1,x-1):
+            #     for j in range(1,y-1):
+            #         pixels[i][j] = round((pixels[i-1][j-1] + pixels[i-1][j] + pixels[i-1][j+1] + 
+            #         pixels[i][j-1] + pixels[i][j] + pixels[i][j+1] + 
+            #         pixels[i+1][j-1] + pixels[i+1][j] + pixels[i+1][j+1])/9)
+            # 3D-array
+            # [x, y, z] = pixels.shape
+            # pixels_unif = np.zeros_like(pixels)
+            # for k in range(z):
+            #     pixels_unif[0][0][k] = round((pixels[0][0][k] + pixels[0][1][k] + pixels[1][0][k] + pixels[1][1][k])/9)
+            #     pixels_unif[0][y-1][k] = round((pixels[0][y-2][k] + pixels[0][y-1][k] + pixels[1][y-2][k] + pixels[1][y-1][k])/9)
+            #     pixels_unif[x-1][0][k] = round((pixels[x-2][0][k] + pixels[x-2][1][k] + pixels[x-1][0][k] + pixels[x-1][1][k])/9)
+            #     pixels_unif[x-1][y-1][k] = round((pixels[x-2][y-2][k] + pixels[x-2][y-1][k] + pixels[x-1][y-2][k] + pixels[x-1][y-1][k])/9)
+            #     for i in range(1,x-1):
+            #         pixels_unif[i][0][k] = round((pixels[i-1][0][k] + pixels[i-1][1][k] + 
+            #         pixels[i][0][k] + pixels[i][1][k] + 
+            #         pixels[i+1][0][k] + pixels[i+1][1][k])/9)
+            #         #
+            #         pixels_unif[i][y-1][k] = round((pixels[i-1][y-2][k] + pixels[i-1][y-1][k] + 
+            #         pixels[i][y-2][k] + pixels[i][y-1][k] + 
+            #         pixels[i+1][y-2][k] + pixels[i+1][y-1][k])/9)
+            #     for j in range(1,y-1):
+            #         pixels_unif[0][j][k] = round((pixels[0][j-1][k] + pixels[0][j][k] + pixels[0][j+1][k] + 
+            #         pixels[1][j-1][k] + pixels[1][j][k] + pixels[1][j+1][k])/9)
+            #         #
+            #         pixels_unif[x-1][j][k] = round((pixels[x-2][j-1][k] + pixels[x-2][j][k] + pixels[x-2][j+1][k] + 
+            #         pixels[x-1][j-1][k] + pixels[x-1][j][k] + pixels[x-1][j+1][k])/9)
+            #     for i in range(1,x-1):
+            #         for j in range(1,y-1):
+            #             pixels_unif[i][j][k] = round((pixels[i-1][j-1][k] + pixels[i-1][j][k] + pixels[i-1][j+1][k] + 
+            #             pixels[i][j-1][k] + pixels[i][j][k] + pixels[i][j+1][k] + 
+            #             pixels[i+1][j-1][k] + pixels[i+1][j][k] + pixels[i+1][j+1][k])/9)
+            # im_unif = Image.fromarray(pixels_unif)

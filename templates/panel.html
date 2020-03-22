@@ -1,12 +1,21 @@
+<p id="loading" style="font-size: 12px"></p>
+<button id="original">Original</button>
 <button id="rgb2gray">RGB2GRAY</button>
 <button id="im2bw">IM2BW</button>
+<button id="unif_filt">Uniform Mask 3x3 Filter</button>
+<button id="gauss_filt">Gauss Mask 3x3 Filter</button>
 <script>
+    $('#original').click(function(){
+        $('#display_image').attr('src',"static/uploads/img.jpg");
+    });
     $('#rgb2gray').click(function(){
+        $('#loading').text("Se incarca...");
         $.ajax({
             type: 'POST',
             url: '/rgb_to_gray',
             success: function(resp){
-                $("#display_image").attr("src",resp.image_url_gray);
+                $('#display_image').attr('src',resp.image_url_gray);
+                $('#loading').text("");
             },
         });
     });
@@ -15,10 +24,7 @@
         $('#im2bw').click(function(){
             count += 1;
             var prag = prompt("Dati un prag cu valoare cuprinsa intre 0 si 255:");
-            // if(Number.isInteger(parseInt(prag)))
-            //     console.log(prag);
-            // else
-            //     console.log(Number.isInteger(parseInt(prag));
+            $('#loading').text("Se incarca...");
             if (parseInt(prag) > 255)
                 prag = "255";
             else
@@ -32,12 +38,35 @@
             $.ajax({
                 type: 'POST',
                 url: '/gray_to_binary',
-                data: prag + "." + count,
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data: prag + '.' + count,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function(resp){
-                    $("#display_image").attr("src",resp.image_url_bw);
+                    $('#display_image').attr('src',resp.image_url_bw);
+                    $('#loading').text("");
                 },
             });
         });
     })();
+    $('#unif_filt').click(function(){
+        $('#loading').text("Se incarca...");
+        $.ajax({
+            type: 'POST',
+            url: '/uniform_filter',
+            success: function(resp){
+                $('#display_image').attr('src',resp.image_url_unif);
+                $('#loading').text("");
+            },
+        });
+    });
+    $('#gauss_filt').click(function(){
+        $('#loading').text("Se incarca...");
+        $.ajax({
+            type: 'POST',
+            url: '/gauss_filter',
+            success: function(resp){
+                $('#display_image').attr('src',resp.image_url_gauss);
+                $('#loading').text("");
+            },
+        });
+    });
 </script>

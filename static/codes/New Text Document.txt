@@ -1,0 +1,53 @@
+	    # im = Image.open(image_src).convert(mode="L")
+            # pixels = np.array(im)
+	    # 2D-array
+            # [x, y] = pixels.shape
+            # pixels[0][0] = round((4*pixels[0][0] + 2*pixels[0][1] + 2*pixels[1][0] + pixels[1][1])/16)
+            # pixels[0][y-1] = round((2*pixels[0][y-2] + 4*pixels[0][y-1] + pixels[1][y-2] + 2*pixels[1][y-1])/16)
+            # pixels[x-1][0] = round((2*pixels[x-2][0] + pixels[x-2][1] + 4*pixels[x-1][0] + 2*pixels[x-1][1])/16)
+            # pixels[x-1][y-1] = round((pixels[x-2][y-2] + 2*pixels[x-2][y-1] + 2*pixels[x-1][y-2] + 4*pixels[x-1][y-1])/16)
+            # for i in range(1,x-1):
+            #     pixels[i][0] = round((2*pixels[i-1][0] + pixels[i-1][1] + 
+            #     4*pixels[i][0] + 2*pixels[i][1] + 
+            #     2*pixels[i+1][0] + pixels[i+1][1])/16)
+            #     #
+            #     pixels[i][y-1] = round((pixels[i-1][y-2] + 2*pixels[i-1][y-1] + 
+            #     2*pixels[i][y-2] + 4*pixels[i][y-1] + 
+            #     pixels[i+1][y-2] + 2*pixels[i+1][y-1])/16)
+            # for j in range(1,y-1):
+            #     pixels[0][j] = round((2*pixels[0][j-1] + 4*pixels[0][j] + 2*pixels[0][j+1] + 
+            #     pixels[1][j-1] + 2*pixels[1][j] + pixels[1][j+1])/16)
+            #     #
+            #     pixels[x-1][j] = round((pixels[x-2][j-1] + 2*pixels[x-2][j] + pixels[x-2][j+1] + 
+            #     2*pixels[x-1][j-1] + 4*pixels[x-1][j] + 2*pixels[x-1][j+1])/16)
+            # for i in range(1,x-1):
+            #     for j in range(1,y-1):
+            #         pixels[i][j] = round((pixels[i-1][j-1] + 2*pixels[i-1][j] + pixels[i-1][j+1] + 
+            #         2*pixels[i][j-1] + 4*pixels[i][j] + 2*pixels[i][j+1] + 
+            #         pixels[i+1][j-1] + 2*pixels[i+1][j] + pixels[i+1][j+1])/16)
+            # [x, y, z] = pixels.shape
+            # for k in range(z):
+            #     pixels[0][0][k] = round((4*pixels[0][0][k] + 2*pixels[0][1][k] + 2*pixels[1][0][k] + pixels[1][1][k])/16)
+            #     pixels[0][y-1][k] = round((2*pixels[0][y-2][k] + 4*pixels[0][y-1][k] + pixels[1][y-2][k] + 2*pixels[1][y-1][k])/16)
+            #     pixels[x-1][0][k] = round((2*pixels[x-2][0][k] + pixels[x-2][1][k] + 4*pixels[x-1][0][k] + 2*pixels[x-1][1][k])/16)
+            #     pixels[x-1][y-1][k] = round((pixels[x-2][y-2][k] + 2*pixels[x-2][y-1][k] + 2*pixels[x-1][y-2][k] + 4*pixels[x-1][y-1][k])/16)
+            #     for i in range(1,x-1):
+            #         pixels[i][0][k] = round((2*pixels[i-1][0][k] + pixels[i-1][1][k] + 
+            #         4*pixels[i][0][k] + 2*pixels[i][1][k] + 
+            #         2*pixels[i+1][0][k] + pixels[i+1][1][k])/16)
+            #         #
+            #         pixels[i][y-1][k] = round((pixels[i-1][y-2][k] + 2*pixels[i-1][y-1][k] + 
+            #         2*pixels[i][y-2][k] + 4*pixels[i][y-1][k] + 
+            #         pixels[i+1][y-2][k] + 2*pixels[i+1][y-1][k])/16)
+            #     for j in range(1,y-1):
+            #         pixels[0][j][k] = round((2*pixels[0][j-1][k] + 4*pixels[0][j][k] + 2*pixels[0][j+1][k] + 
+            #         pixels[1][j-1][k] + 2*pixels[1][j][k] + pixels[1][j+1][k])/16)
+            #         #
+            #         pixels[x-1][j][k] = round((pixels[x-2][j-1][k]+ 2*pixels[x-2][j][k] + pixels[x-2][j+1][k] + 
+            #         2*pixels[x-1][j-1][k] + 4*pixels[x-1][j][k] + 2*pixels[x-1][j+1][k])/16)
+            #     for i in range(1,x-1):
+            #         for j in range(1,y-1):
+            #             pixels[i][j][k] = round((pixels[i-1][j-1][k] + 2*pixels[i-1][j][k] + pixels[i-1][j+1][k] + 
+            #             2*pixels[i][j-1][k] + 4*pixels[i][j][k] + 2*pixels[i][j+1][k] + 
+            #             pixels[i+1][j-1][k] + 2*pixels[i+1][j][k] + pixels[i+1][j+1][k])/16)
+	    # im_gauss = Image.fromarray(pixels)
