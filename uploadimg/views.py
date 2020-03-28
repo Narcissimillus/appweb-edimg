@@ -7,11 +7,12 @@ uploadimg = Blueprint('uploadimg', __name__, template_folder='templates')
 
 apk = Flask(__name__)
 
+# Permite incarcarea de fisiere doar de tip imagine (extensie .JPG, .PNG etc.)
 photos = UploadSet('photos', IMAGES)
 
 apk.config['UPLOADED_PHOTOS_DEST'] = 'static/uploads'
 configure_uploads(apk, photos)
-#Accepta fisiere <= 16MB
+# Accepta fisiere <= 16MB
 patch_request_class(apk, size=16777216)
 
 @uploadimg.route('/uploadimg', methods=['GET', 'POST'])

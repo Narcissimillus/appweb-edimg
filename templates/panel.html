@@ -1,10 +1,43 @@
 <p id="loading" style="font-size: 12px"></p>
+<button id="upload_new" onclick="window.location.reload();">Upload new image</button>
 <button id="original">Original</button>
 <button id="rgb2gray">RGB2GRAY</button>
 <button id="im2bw">IM2BW</button>
-<button id="unif_filt">Uniform Mask 3x3 Filter</button>
-<button id="gauss_filt">Gauss Mask 3x3 Filter</button>
+<button id="unif_filt">Uniform Mask Filter</button>
+<button id="gauss_filt">Gauss Mask Filter</button>
+<div id="mask_opts" style="font-size: 14px" hidden>
+    <br/> Selectati dimensiunea mastii pe care doriti sa o aplicati: <br/>
+    <input type="radio" id="mask_3x3" name="mask_opt">
+    <label for="mask_3x3">3x3 Mask Filter</label><br/>
+    <input type="radio" id="mask_5x5" name="mask_opt">
+    <label for="mask_5x5">5x5 Mask Filter</label><br>
+    <input type="submit" id="exec_mask" value="Select">
+</div>
+<button id="roberts">Roberts Filter</button>
+<button id="prewitt">Prewitt Filter</button>
+<button id="sobel">Sobel Filter</button>
+<button id="kirsch">Kirsch Filter</button>
+<div id="rpsk_opts" style="font-size: 14px" hidden>
+    <br/> Selectati punctul cardinal al filtrului pe care doriti sa-l aplicati: <br/>
+    <input type="radio" id="nord" name="pct_card">
+    <label for="nord">Nord</label><br/>
+    <input type="radio" id="est" name="pct_card">
+    <label for="nord">Est</label><br/>
+    <input type="radio" id="sud" name="pct_card">
+    <label for="nord">Sud</label><br/>
+    <input type="radio" id="vest" name="pct_card">
+    <label for="nord">Vest</label><br/>
+    <input type="submit" id="exec_rpsk" value="Select">
+</div>
+<hr/>
+<button id="save" download="img.jpg">Save Image</button>
 <script>
+    $('#save').click(function (){
+        var a  = document.createElement('a');
+        a.href = $('#display_image').attr("src")
+        a.download = "processed_image.jpg";
+        a.click()
+    });
     $('#original').click(function(){
         $('#display_image').attr('src',"static/uploads/img.jpg");
     });
@@ -48,25 +81,245 @@
         });
     })();
     $('#unif_filt').click(function(){
-        $('#loading').text("Se incarca...");
-        $.ajax({
-            type: 'POST',
-            url: '/uniform_filter',
-            success: function(resp){
-                $('#display_image').attr('src',resp.image_url_unif);
-                $('#loading').text("");
-            },
+        $('#mask_opts').show("slow");
+        $('#exec_mask').click(function(){
+            $('#mask_opts').hide("slow");
+            if(document.getElementById('mask_3x3').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                type: 'POST',
+                url: '/uniform_filter_3x3',
+                success: function(resp){
+                    $('#display_image').attr('src',resp.image_url_unif_3x3);
+                    $('#loading').text("");
+                },
+            });
+            }else if(document.getElementById('mask_5x5').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                type: 'POST',
+                url: '/uniform_filter_5x5',
+                success: function(resp){
+                    $('#display_image').attr('src',resp.image_url_unif_5x5);
+                    $('#loading').text("");
+                },
+            });
+            }
         });
     });
     $('#gauss_filt').click(function(){
-        $('#loading').text("Se incarca...");
-        $.ajax({
-            type: 'POST',
-            url: '/gauss_filter',
-            success: function(resp){
-                $('#display_image').attr('src',resp.image_url_gauss);
-                $('#loading').text("");
-            },
+        $('#mask_opts').show("slow");
+        $('#exec_mask').click(function(){
+            $('#mask_opts').hide("slow");
+            if(document.getElementById('mask_3x3').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/gauss_filter_3x3',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_gauss_3x3);
+                        $('#loading').text("");
+                    },
+                });
+            }else if(document.getElementById('mask_5x5').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/gauss_filter_5x5',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_gauss_5x5);
+                        $('#loading').text("");
+                    },
+                });
+            }
+        });
+    });
+    $('#roberts').click(function(){
+        $('#rpsk_opts').show("slow");
+        $('#exec_rpsk').click(function(){
+            $('#rpsk_opts').hide("slow");
+            if(document.getElementById('nord').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/roberts_filter_N',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_roberts_N);
+                        $('#loading').text("");
+                    },
+                });
+            }else if(document.getElementById('est').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/roberts_filter_E',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_roberts_E);
+                        $('#loading').text("");
+                    },
+                });
+            }else if(document.getElementById('sud').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/roberts_filter_S',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_roberts_S);
+                        $('#loading').text("");
+                    },
+                });
+            }else if(document.getElementById('vest').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/roberts_filter_V',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_roberts_V);
+                        $('#loading').text("");
+                    },
+                });
+            }
+        });
+    });
+    $('#prewitt').click(function(){
+        $('#rpsk_opts').show("slow");
+        $('#exec_rpsk').click(function(){
+            $('#rpsk_opts').hide("slow");
+            if(document.getElementById('nord').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/prewitt_filter_N',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_prewitt_N);
+                        $('#loading').text("");
+                    },
+                });
+            }else if(document.getElementById('est').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/prewitt_filter_E',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_prewitt_E);
+                        $('#loading').text("");
+                    },
+                });
+            }else if(document.getElementById('sud').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/prewitt_filter_S',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_prewitt_S);
+                        $('#loading').text("");
+                    },
+                });
+            }else if(document.getElementById('vest').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/prewitt_filter_V',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_prewitt_V);
+                        $('#loading').text("");
+                    },
+                });
+            }
+        });
+    });
+    $('#sobel').click(function(){
+        $('#rpsk_opts').show("slow");
+        $('#exec_rpsk').click(function(){
+            $('#rpsk_opts').hide("slow");
+            if(document.getElementById('nord').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/sobel_filter_N',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_sobel_N);
+                        $('#loading').text("");
+                    },
+                });
+            }else if(document.getElementById('est').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/sobel_filter_E',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_sobel_E);
+                        $('#loading').text("");
+                    },
+                });
+            }else if(document.getElementById('sud').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/sobel_filter_S',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_sobel_S);
+                        $('#loading').text("");
+                    },
+                });
+            }else if(document.getElementById('vest').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/sobel_filter_V',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_sobel_V);
+                        $('#loading').text("");
+                    },
+                });
+            }
+        });
+    });
+    $('#kirsch').click(function(){
+        $('#rpsk_opts').show("slow");
+        $('#exec_rpsk').click(function(){
+            $('#rpsk_opts').hide("slow");
+            if(document.getElementById('nord').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/kirsch_filter_N',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_kirsch_N);
+                        $('#loading').text("");
+                    },
+                });
+            }else if(document.getElementById('est').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/kirsch_filter_E',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_kirsch_E);
+                        $('#loading').text("");
+                    },
+                });
+            }else if(document.getElementById('sud').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/kirsch_filter_S',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_kirsch_S);
+                        $('#loading').text("");
+                    },
+                });
+            }else if(document.getElementById('vest').checked) {
+                $('#loading').text("Se incarca...");
+                $.ajax({
+                    type: 'POST',
+                    url: '/kirsch_filter_V',
+                    success: function(resp){
+                        $('#display_image').attr('src',resp.image_url_kirsch_V);
+                        $('#loading').text("");
+                    },
+                });
+            }
         });
     });
 </script>

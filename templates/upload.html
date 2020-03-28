@@ -9,7 +9,7 @@
 <h1  id="header"> Upload new image </h1>
 <form id="FileForm" name="imgfile" enctype="multipart/form-data">
     <input type="file" name="imgfile" id="imgfile" />
-    <input type="button" name="submit" value="submit" onclick="ProcessImage()" />
+    <input type="button" name="submit" value="submit" onclick="StartProcess()" />
 </form>
 
 <img id="display_image" src="">
@@ -19,10 +19,9 @@
 </div>
 
 <script>
-    function ProcessImage(){
+    function StartProcess(){
         var formDataRaw = $('#FileForm')[0];
         var form_data = new FormData(formDataRaw);
-        console.log(form_data)
         $.ajax({
             type: 'POST',
             url: '/uploadimg',
@@ -32,10 +31,10 @@
             processData: false,
             async: false,
             success: function(data){
-                $("#header").text("Uploaded");
-                $("#FileForm").hide();
-                $("#display_image").attr("src",data.image_url);
-                $("#panel").append(data.rendered)
+                $('#header').text("Uploaded");
+                $('#FileForm').hide("fast");
+                $('#display_image').attr('src',data.image_url);
+                $('#panel').append(data.rendered)
             },
         });
     };
