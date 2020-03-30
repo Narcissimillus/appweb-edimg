@@ -17,11 +17,7 @@ def im2bw():
             text = request.get_data().decode('UTF-8') # preluam sub forma de string, data din front-end: prag si count (nr. click-uri buton)
             textsplit = text.split('.') # separam prag si count
             prag = int(textsplit[0])
-            count = textsplit[1]+".jpg" # count va deveni numele imaginii curente
-            # imaginea precedenta va fi stearsa, daca se mai doreste o noua imagine prelucrata im_bw
-            del_img = str(int(textsplit[1])-1)+".jpg"
-            if os.path.exists("static/uploads/" + del_img):
-                os.remove("static/uploads/" + del_img)
+            count = "img_bw_" + textsplit[1] + ".jpg" # count va deveni numele imaginii curente
             [x, y] = pixels.shape # dimensiunile imaginii
             for i in range(x):
                 for j in range(y):

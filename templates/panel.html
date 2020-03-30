@@ -1,5 +1,5 @@
+<button id="upload_new" onclick="window.location.reload();">Upload new image</button> <br/> <br/>
 <p id="loading" style="font-size: 12px"></p>
-<button id="upload_new" onclick="window.location.reload();">Upload new image</button>
 <button id="original">Original</button>
 <button id="rgb2gray">RGB2GRAY</button>
 <button id="im2bw">IM2BW</button>
@@ -28,6 +28,30 @@
     <input type="radio" id="vest" name="pct_card">
     <label for="nord">Vest</label><br/>
     <input type="submit" id="exec_rpsk" value="Select">
+</div>
+<button id="min_filt">Min Filter</button>
+<button id="max_filt">Max Filter</button>
+<button id="median_filt">Median Filter</button>
+<button id="medext_filt">Mean Filter</button>
+<button id="range_filt">Range Filter</button>
+<button id="disprange_filt">Dispersion-Range Filter</button>
+<button id="alphamed_filt">α-Median Filter</button>
+<div id="alphamed_slider" style="font-size: 14px" hidden>
+    <br/> α = <span id="outputmed"></span> <br/>
+    <input type="range" id="alphamed_value" min="1" max="4" value="1"><br/>
+    <input type="submit" id="exec_alphamed" value="Select">
+</div>
+<button id="alphacom_filt">α-Complementary Filter</button>
+<div id="alphacom_slider" style="font-size: 14px" hidden>
+    <br/> α = <span id="outputcom"></span> <br/>
+    <input type="range" id="alphacom_value" min="1" max="4" value="1"><br/>
+    <input type="submit" id="exec_alphacom" value="Select">
+</div>
+<button id="alphaqsr_filt">α-Quasi-Range Filter</button>
+<div id="alphaqsr_slider" style="font-size: 14px" hidden>
+    <br/> α = <span id="outputqsr"></span> <br/>
+    <input type="range" id="alphaqsr_value" min="1" max="3" value="1"><br/>
+    <input type="submit" id="exec_alphaqsr" value="Select">
 </div>
 <hr/>
 <button id="save" download="img.jpg">Save Image</button>
@@ -320,6 +344,162 @@
                     },
                 });
             }
+        });
+    });
+    $('#min_filt').click(function(){
+        $('#loading').text("Se incarca...");
+        $.ajax({
+            type: 'POST',
+            url: '/min_filter',
+            success: function(resp){
+                $('#display_image').attr('src',resp.image_url_min);
+                $('#loading').text("");
+            },
+        });
+    });
+    $('#max_filt').click(function(){
+        $('#loading').text("Se incarca...");
+        $.ajax({
+            type: 'POST',
+            url: '/max_filter',
+            success: function(resp){
+                $('#display_image').attr('src',resp.image_url_max);
+                $('#loading').text("");
+            },
+        });
+    });
+    $('#median_filt').click(function(){
+        $('#loading').text("Se incarca...");
+        $.ajax({
+            type: 'POST',
+            url: '/median_filter',
+            success: function(resp){
+                $('#display_image').attr('src',resp.image_url_median);
+                $('#loading').text("");
+            },
+        });
+    });
+    $('#medext_filt').click(function(){
+        $('#loading').text("Se incarca...");
+        $.ajax({
+            type: 'POST',
+            url: '/medext_filter',
+            success: function(resp){
+                $('#display_image').attr('src',resp.image_url_medext);
+                $('#loading').text("");
+            },
+        });
+    });
+    $('#range_filt').click(function(){
+        $('#loading').text("Se incarca...");
+        $.ajax({
+            type: 'POST',
+            url: '/range_filter',
+            success: function(resp){
+                $('#display_image').attr('src',resp.image_url_range);
+                $('#loading').text("");
+            },
+        });
+    });
+    $('#disprange_filt').click(function(){
+        $('#loading').text("Se incarca...");
+        $.ajax({
+            type: 'POST',
+            url: '/disprange_filter',
+            success: function(resp){
+                $('#display_image').attr('src',resp.image_url_disprange);
+                $('#loading').text("");
+            },
+        });
+    });
+    $('#alphamed_filt').click(function(){
+        $('#alphamed_slider').show("slow");
+        $('#outputmed').text($('#alphamed_value').val());
+        $('#alphamed_value').on('input', function(){
+                $('#outputmed').text($(this).val());
+                // var alpha = $('#alphamed_value').val();
+                // $.ajax({
+                //     type: 'POST',
+                //     url: '/alphamed_filter',
+                //     data: alpha,
+                //     success: function(resp){
+                //         $('#display_image').attr('src',resp.image_url_alphamed);
+                //         $('#loading').text("");
+                //     },
+                // });               
+        });
+        $('#exec_alphamed').click(function(){
+            $('#alphamed_slider').hide("slow");
+            var alpha = $('#alphamed_value').val();
+            $.ajax({
+                type: 'POST',
+                url: '/alphamed_filter',
+                data: alpha,
+                success: function(resp){
+                    $('#display_image').attr('src',resp.image_url_alphamed);
+                    $('#loading').text("");
+                },
+            });
+        });
+    });
+    $('#alphacom_filt').click(function(){
+        $('#alphacom_slider').show("slow");
+        $('#outputcom').text($('#alphacom_value').val());
+        $('#alphacom_value').on('input', function(){
+                $('#outputcom').text($(this).val());
+                // var alpha = $('#alphamed_value').val();
+                // $.ajax({
+                //     type: 'POST',
+                //     url: '/alphamed_filter',
+                //     data: alpha,
+                //     success: function(resp){
+                //         $('#display_image').attr('src',resp.image_url_alphamed);
+                //         $('#loading').text("");
+                //     },
+                // });               
+        });
+        $('#exec_alphacom').click(function(){
+            $('#alphacom_slider').hide("slow");
+            var alpha = $('#alphacom_value').val();
+            $.ajax({
+                type: 'POST',
+                url: '/alphacom_filter',
+                data: alpha,
+                success: function(resp){
+                    $('#display_image').attr('src',resp.image_url_alphacom);
+                    $('#loading').text("");
+                },
+            });
+        });
+    });
+    $('#alphaqsr_filt').click(function(){
+        $('#alphaqsr_slider').show("slow");
+        $('#outputqsr').text($('#alphaqsr_value').val());
+        $('#alphaqsr_value').on('input', function(){
+                $('#outputqsr').text($(this).val());
+                // var alpha = $('#alphamed_value').val();
+                // $.ajax({
+                //     type: 'POST',
+                //     url: '/alphamed_filter',
+                //     data: alpha,
+                //     success: function(resp){
+                //         $('#display_image').attr('src',resp.image_url_alphamed);
+                //         $('#loading').text("");
+                //     },
+                // });               
+        });
+        $('#exec_alphaqsr').click(function(){
+            $('#alphaqsr_slider').hide("slow");
+            var alpha = $('#alphaqsr_value').val();
+            $.ajax({
+                type: 'POST',
+                url: '/alphaqsr_filter',
+                data: alpha,
+                success: function(resp){
+                    $('#display_image').attr('src',resp.image_url_alphaqsr);
+                    $('#loading').text("");
+                },
+            });
         });
     });
 </script>

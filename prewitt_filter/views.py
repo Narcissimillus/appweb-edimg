@@ -1,5 +1,5 @@
 from flask import Blueprint, Flask, request, url_for, jsonify
-from PIL import Image, ImageFilter, ImageMath
+from PIL import Image, ImageFilter
 from delete_processed_images.views import delete_images
 
 prewitt_filter = Blueprint('prewitt_filter', __name__, template_folder='templates')
