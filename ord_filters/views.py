@@ -55,7 +55,7 @@ def medext_filter():
             image_src = 'static/uploads/img.jpg'
             im = Image.open(image_src)
             # Se face media aritmetica dintre pixelul maxim si pixelul minim dintr-un bloc de pixeli 3x3
-            im_medext = Image.fromarray(np.uint8(1/2*np.array(im.filter(ImageFilter.MaxFilter(size=3)))+1/2*np.array(im.filter(ImageFilter.MinFilter(size=3)))))
+            im_medext = Image.fromarray(np.uint8(1/2*np.array(im.filter(ImageFilter.MaxFilter(size=3)),dtype='float32')+1/2*np.array(im.filter(ImageFilter.MinFilter(size=3)),dtype='float32')))
             im_medext.save('static/uploads/img_medext.jpg')
             image_url_medext = url_for('static',filename="uploads/img_medext.jpg")
             return jsonify({'image_url_medext' : image_url_medext})
@@ -77,7 +77,7 @@ def range_filter():
         except Exception as e:
             print(e)
         
-
+# Blocul de pixeli 3x3 trebuie sa fie ordonat crescator!
 @ord_filters.route('/disprange_filter', methods=['GET', 'POST'])
 def disprange_filter():
     if request.method == "POST":
@@ -87,8 +87,8 @@ def disprange_filter():
             im = Image.open(image_src)
             # Se calculeaza "distanta" dintre pixelelii mai mari ca pixelul median si pixelii mai mici ca pixelul median dintr-un bloc de pixeli 3x3
             im_disprange = Image.fromarray(np.uint8(
-            1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=5)))+1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=6)))+1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=7)))+1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=8)))
-            -1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=0)))-1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=1)))-1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=2)))-1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=3)))))
+            1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=5)),dtype='float32')+1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=6)),dtype='float32')+1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=7)),dtype='float32')+1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=8)),dtype='float32')
+            -1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=0)),dtype='float32')-1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=1)),dtype='float32')-1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=2)),dtype='float32')-1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=3)),dtype='float32')))
             im_disprange.save('static/uploads/img_disprange.jpg')
             image_url_disprange = url_for('static',filename="uploads/img_disprange.jpg")
             return jsonify({'image_url_disprange' : image_url_disprange})
@@ -107,25 +107,25 @@ def alphamed_filter():
             if alpha == 1:
                 # Se calculeaza media aritmetica a pixelilor alpha egal departat la stanga si la dreapta fata de pixelul median dintr-un bloc de pixeli 3x3
                 im_alphamed = Image.fromarray(np.uint8(
-                1/7*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=1)))+1/7*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=2)))+
-                1/7*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=3)))+1/7*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=4)))+
-                1/7*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=5)))+1/7*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=6)))+
-                1/7*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=7)))))
+                1/7*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=1)),dtype='float32')+1/7*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=2)),dtype='float32')+
+                1/7*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=3)),dtype='float32')+1/7*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=4)),dtype='float32')+
+                1/7*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=5)),dtype='float32')+1/7*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=6)),dtype='float32')+
+                1/7*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=7)),dtype='float32')))
                 im_alphamed.save('static/uploads/' + imgname)
                 image_url_alphamed = url_for('static',filename="uploads/" + imgname)
                 return jsonify({'image_url_alphamed' : image_url_alphamed})
             elif alpha == 2:
                 im_alphamed = Image.fromarray(np.uint8(
-                1/5*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=2)))+1/5*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=3)))+
-                1/5*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=4)))+1/5*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=5)))+
-                1/5*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=6)))))
+                1/5*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=2)),dtype='float32')+1/5*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=3)),dtype='float32')+
+                1/5*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=4)),dtype='float32')+1/5*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=5)),dtype='float32')+
+                1/5*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=6)),dtype='float32')))
                 im_alphamed.save('static/uploads/' + imgname)
                 image_url_alphamed = url_for('static',filename="uploads/" + imgname)
                 return jsonify({'image_url_alphamed' : image_url_alphamed})
             elif alpha == 3:
                 im_alphamed = Image.fromarray(np.uint8(
-                1/3*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=3)))+1/3*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=4)))+
-                1/3*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=5)))))
+                1/3*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=3)),dtype='float32')+1/3*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=4)),dtype='float32')+
+                1/3*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=5)),dtype='float32')))
                 im_alphamed.save('static/uploads/' + imgname)
                 image_url_alphamed = url_for('static',filename="uploads/" + imgname)
                 return jsonify({'image_url_alphamed' : image_url_alphamed})
@@ -150,31 +150,31 @@ def alphacom_filter():
             if alpha == 1:
                 # Se calculeaza media aritmetica a alpha pixeli din margini (alpha din stanga, alpha din dreapta) dintr-un bloc de pixeli 3x3
                 im_alphacom = Image.fromarray(np.uint8(
-                1/2*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=0)))+1/2*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=8)))))
+                1/2*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=0)),dtype='float32')+1/2*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=8)),dtype='float32')))
                 im_alphacom.save('static/uploads/' + imgname)
                 image_url_alphacom = url_for('static',filename="uploads/" + imgname)
                 return jsonify({'image_url_alphacom' : image_url_alphacom})
             elif alpha == 2:
                 im_alphacom = Image.fromarray(np.uint8(
-                1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=0)))+1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=1)))+
-                1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=7)))+1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=8)))))
+                1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=0)),dtype='float32')+1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=1)),dtype='float32')+
+                1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=7)),dtype='float32')+1/4*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=8)),dtype='float32')))
                 im_alphacom.save('static/uploads/' + imgname)
                 image_url_alphacom = url_for('static',filename="uploads/" + imgname)
                 return jsonify({'image_url_alphacom' : image_url_alphacom})
             elif alpha == 3:
                 im_alphacom = Image.fromarray(np.uint8(
-                1/6*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=0)))+1/6*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=1)))+
-                1/6*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=2)))+1/6*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=6)))+
-                1/6*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=7)))+1/6*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=8)))))
+                1/6*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=0)),dtype='float32')+1/6*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=1)),dtype='float32')+
+                1/6*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=2)),dtype='float32')+1/6*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=6)),dtype='float32')+
+                1/6*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=7)),dtype='float32')+1/6*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=8)),dtype='float32')))
                 im_alphacom.save('static/uploads/' + imgname)
                 image_url_alphacom = url_for('static',filename="uploads/" + imgname)
                 return jsonify({'image_url_alphacom' : image_url_alphacom})
             elif alpha == 4:
                 im_alphacom = Image.fromarray(np.uint8(
-                1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=0)))+1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=1)))+
-                1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=2)))+1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=3)))+
-                1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=5)))+1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=6)))+
-                1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=7)))+1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=8)))))
+                1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=0)),dtype='float32')+1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=1)),dtype='float32')+
+                1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=2)),dtype='float32')+1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=3)),dtype='float32')+
+                1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=5)),dtype='float32')+1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=6)),dtype='float32')+
+                1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=7)),dtype='float32')+1/8*np.array(im.filter(ImageFilter.RankFilter(size=3,rank=8)),dtype='float32')))
                 im_alphacom.save('static/uploads/' + imgname)
                 image_url_alphacom = url_for('static',filename="uploads/" + imgname)
                 return jsonify({'image_url_alphacom' : image_url_alphacom})
