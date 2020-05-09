@@ -27,7 +27,8 @@ def upload():
         except Exception as e:
             print(e)
         image_url = "static/uploads/"+filename
-        return jsonify({'image_url' : image_url,
+        return jsonify({'image_url': image_url,
+                        'rendered_left': render_template('panel_left.html'),
                         'rendered': render_template('panel.html')})
     else:
         return render_template('upload.html')

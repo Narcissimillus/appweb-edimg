@@ -1,21 +1,31 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Upload</title>
+<title> Editor Imagine </title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 {% endblock %}
 
 {% block body %}
+<div id="main">
+<div id="panel_left">
+<br>
+</div>
+<div id="middle">
 <h1  id="header"> Upload new image </h1>
 <form id="FileForm" name="imgfile" enctype="multipart/form-data">
     <input type="file" name="imgfile" id="imgfile" />
     <input type="button" name="submit" value="submit" onclick="StartProcess()" />
 </form>
 
-<img id="display_image" src="">
+<img id="display_image" src=""> <br>
+<p id="loading" style="font-size: 12px"></p>
+<button id="upload_new" onclick="window.location.reload();" hidden>Upload new image</button> 
+<button id="save" download="img.jpg" hidden>Save Image</button>
+</div>
 
 <div id="panel">
 
+</div>
 </div>
 
 <script>
@@ -32,9 +42,12 @@
             async: false,
             success: function(data){
                 $('#header').text("Uploaded");
-                $('#FileForm').hide("fast");
+                $('#FileForm').slideUp("fast");
                 $('#display_image').attr('src',data.image_url);
-                $('#panel').append(data.rendered)
+                $('#upload_new').show();
+                $('#save').show();
+                $('#panel_left').append(data.rendered_left);
+                $('#panel').append(data.rendered);
             },
         });
     };

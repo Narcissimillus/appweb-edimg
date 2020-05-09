@@ -1,80 +1,7 @@
-<button id="upload_new" onclick="window.location.reload();">Upload new image</button> <br/> <br/>
-<p id="loading" style="font-size: 12px"></p>
-<button id="original">Original</button>
-<button id="rgb2gray">RGB2GRAY</button>
-<button id="im2bw">IM2BW</button>
-<button id="unif_filt">Uniform Mask Filter</button>
-<button id="gauss_filt">Gauss Mask Filter</button>
-<div id="mask_opts" style="font-size: 14px" hidden>
-    <br/> Selectati dimensiunea mastii pe care doriti sa o aplicati: <br/>
-    <input type="radio" id="mask_3x3" name="mask_opt">
-    <label for="mask_3x3">3x3 Mask Filter</label><br/>
-    <input type="radio" id="mask_5x5" name="mask_opt">
-    <label for="mask_5x5">5x5 Mask Filter</label><br>
-    <input type="submit" id="exec_mask" value="Select">
-</div>
-<button id="roberts">Roberts Filter</button>
-<button id="prewitt">Prewitt Filter</button>
-<button id="sobel">Sobel Filter</button>
-<button id="kirsch">Kirsch Filter</button>
-<div id="rpsk_opts" style="font-size: 14px" hidden>
-    <br/> Selectati punctul cardinal al filtrului pe care doriti sa-l aplicati: <br/>
-    <input type="radio" id="nord" name="pct_card">
-    <label for="nord">Nord</label><br/>
-    <input type="radio" id="est" name="pct_card">
-    <label for="nord">Est</label><br/>
-    <input type="radio" id="sud" name="pct_card">
-    <label for="nord">Sud</label><br/>
-    <input type="radio" id="vest" name="pct_card">
-    <label for="nord">Vest</label><br/>
-    <input type="submit" id="exec_rpsk" value="Select">
-</div>
-<button id="min_filt">Min Filter</button>
-<button id="max_filt">Max Filter</button>
-<button id="median_filt">Median Filter</button>
-<button id="medext_filt">Mean Filter</button>
-<button id="range_filt">Range Filter</button>
-<button id="disprange_filt">Dispersion-Range Filter</button>
-<button id="alphamed_filt">α-Median Filter</button>
-<div id="alphamed_slider" style="font-size: 14px" hidden>
-    <br/> α = <span id="outputmed"></span> <br/>
-    <input type="range" id="alphamed_value" min="1" max="4" value="1"><br/>
-    <input type="submit" id="exec_alphamed" value="Select">
-</div>
-<button id="alphacom_filt">α-Complementary Filter</button>
-<div id="alphacom_slider" style="font-size: 14px" hidden>
-    <br/> α = <span id="outputcom"></span> <br/>
-    <input type="range" id="alphacom_value" min="1" max="4" value="1"><br/>
-    <input type="submit" id="exec_alphacom" value="Select">
-</div>
-<button id="alphaqsr_filt">α-Quasi-Range Filter</button>
-<div id="alphaqsr_slider" style="font-size: 14px" hidden>
-    <br/> α = <span id="outputqsr"></span> <br/>
-    <input type="range" id="alphaqsr_value" min="1" max="3" value="1"><br/>
-    <input type="submit" id="exec_alphaqsr" value="Select">
-</div>
-<button id="artm_filt">Arithmetic Mean Filter</button>
-<button id="geom_filt">Geometric Mean Filter</button>
-<button id="harm_filt">Harmonic Mean Filter</button>
-<button id="contraharm_filt">Contraharmonic-α Mean Filter</button>
-<div id="alphach_slider" style="font-size: 14px" hidden>
-    <br/> α = <span id="outputch"></span> <br/>
-    <input type="range" id="alphach_value" min="-100" max="100" value="0"><br/>
-    <input type="submit" id="exec_alphach" value="Select">
-</div>
-<button id="power_filt">Power-α Mean Filter</button>
-<div id="power_opts" style="font-size: 14px" hidden>
-    <br/> Selectati tipul de putere pe care vreti sa-l implementati: <br/>
-    <input type="radio" id="alphapow" name="alphapow">
-    <label for="alphapow">α = <span id="outputpow"></span></label><br/>
-        <input type="range" id="alphapow_value" min="1" max="100" value="1"><br/>
-    <input type="radio" id="alphapow2" name="alphapow">
-    <label for="alphapow2">1/α = <span id="outputpow2"></span></label><br/>
-        <input type="range" id="alphapow2_value" min="1" max="100" value="1"><br/>
-    <input type="submit" id="exec_alphapow" value="Select">
-</div>
-<hr/>
-<button id="save" download="img.jpg">Save Image</button>
+<br>
+<ul id="ul_right">
+    <!-- <li><a>Test</a></li> -->
+</ul>
 <script>
     $('#save').click(function (){
         var a  = document.createElement('a');
@@ -125,10 +52,10 @@
         });
     })();
     $('#unif_filt').click(function(){
-        $('#mask_opts').show("slow");
-        $('#exec_mask').click(function(){
-            $('#mask_opts').hide("slow");
-            if(document.getElementById('mask_3x3').checked) {
+        $('#mask_opts_unif').show("slow");
+        $('#exec_mask_unif').click(function(){
+            $('#mask_opts_unif').hide("slow");
+            if(document.getElementById('mask_3x3_unif').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                 type: 'POST',
@@ -138,7 +65,7 @@
                     $('#loading').text("");
                 },
             });
-            }else if(document.getElementById('mask_5x5').checked) {
+            }else if(document.getElementById('mask_5x5_unif').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                 type: 'POST',
@@ -152,10 +79,10 @@
         });
     });
     $('#gauss_filt').click(function(){
-        $('#mask_opts').show("slow");
-        $('#exec_mask').click(function(){
-            $('#mask_opts').hide("slow");
-            if(document.getElementById('mask_3x3').checked) {
+        $('#mask_opts_gauss').show("slow");
+        $('#exec_mask_gauss').click(function(){
+            $('#mask_opts_gauss').hide("slow");
+            if(document.getElementById('mask_3x3_gauss').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -165,7 +92,7 @@
                         $('#loading').text("");
                     },
                 });
-            }else if(document.getElementById('mask_5x5').checked) {
+            }else if(document.getElementById('mask_5x5_gauss').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -179,10 +106,10 @@
         });
     });
     $('#roberts').click(function(){
-        $('#rpsk_opts').show("slow");
-        $('#exec_rpsk').click(function(){
-            $('#rpsk_opts').hide("slow");
-            if(document.getElementById('nord').checked) {
+        $('#roberts_opt').show("slow");
+        $('#exec_roberts').click(function(){
+            $('#roberts_opt').hide("slow");
+            if(document.getElementById('nord_roberts').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -192,7 +119,7 @@
                         $('#loading').text("");
                     },
                 });
-            }else if(document.getElementById('est').checked) {
+            }else if(document.getElementById('est_roberts').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -202,7 +129,7 @@
                         $('#loading').text("");
                     },
                 });
-            }else if(document.getElementById('sud').checked) {
+            }else if(document.getElementById('sud_roberts').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -212,7 +139,7 @@
                         $('#loading').text("");
                     },
                 });
-            }else if(document.getElementById('vest').checked) {
+            }else if(document.getElementById('vest_roberts').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -226,10 +153,10 @@
         });
     });
     $('#prewitt').click(function(){
-        $('#rpsk_opts').show("slow");
-        $('#exec_rpsk').click(function(){
-            $('#rpsk_opts').hide("slow");
-            if(document.getElementById('nord').checked) {
+        $('#prewitt_opt').show("slow");
+        $('#exec_prewitt').click(function(){
+            $('#prewitt_opt').hide("slow");
+            if(document.getElementById('nord_prewitt').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -239,7 +166,7 @@
                         $('#loading').text("");
                     },
                 });
-            }else if(document.getElementById('est').checked) {
+            }else if(document.getElementById('est_prewitt').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -249,7 +176,7 @@
                         $('#loading').text("");
                     },
                 });
-            }else if(document.getElementById('sud').checked) {
+            }else if(document.getElementById('sud_prewitt').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -259,7 +186,7 @@
                         $('#loading').text("");
                     },
                 });
-            }else if(document.getElementById('vest').checked) {
+            }else if(document.getElementById('vest_prewitt').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -273,10 +200,10 @@
         });
     });
     $('#sobel').click(function(){
-        $('#rpsk_opts').show("slow");
-        $('#exec_rpsk').click(function(){
-            $('#rpsk_opts').hide("slow");
-            if(document.getElementById('nord').checked) {
+        $('#sobel_opt').show("slow");
+        $('#exec_sobel').click(function(){
+            $('#sobel_opt').hide("slow");
+            if(document.getElementById('nord_sobel').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -286,7 +213,7 @@
                         $('#loading').text("");
                     },
                 });
-            }else if(document.getElementById('est').checked) {
+            }else if(document.getElementById('est_sobel').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -296,7 +223,7 @@
                         $('#loading').text("");
                     },
                 });
-            }else if(document.getElementById('sud').checked) {
+            }else if(document.getElementById('sud_sobel').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -306,7 +233,7 @@
                         $('#loading').text("");
                     },
                 });
-            }else if(document.getElementById('vest').checked) {
+            }else if(document.getElementById('vest_sobel').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -320,10 +247,10 @@
         });
     });
     $('#kirsch').click(function(){
-        $('#rpsk_opts').show("slow");
-        $('#exec_rpsk').click(function(){
-            $('#rpsk_opts').hide("slow");
-            if(document.getElementById('nord').checked) {
+        $('#kirsch_opt').show("slow");
+        $('#exec_kirsch').click(function(){
+            $('#kirsch_opt').hide("slow");
+            if(document.getElementById('nord_kirsch').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -333,7 +260,7 @@
                         $('#loading').text("");
                     },
                 });
-            }else if(document.getElementById('est').checked) {
+            }else if(document.getElementById('est_kirsch').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -343,7 +270,7 @@
                         $('#loading').text("");
                     },
                 });
-            }else if(document.getElementById('sud').checked) {
+            }else if(document.getElementById('sud_kirsch').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
@@ -353,7 +280,7 @@
                         $('#loading').text("");
                     },
                 });
-            }else if(document.getElementById('vest').checked) {
+            }else if(document.getElementById('vest_kirsch').checked) {
                 $('#loading').text("Se incarca...");
                 $.ajax({
                     type: 'POST',
