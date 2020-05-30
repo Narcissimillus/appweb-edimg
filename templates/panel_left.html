@@ -81,19 +81,19 @@
     <li><a id="alphamed_filt">α-Median Filter</a></li>
     <div id="alphamed_slider" style="font-size: 14px" hidden>
         <br/> α = <span id="outputmed"></span> <br/>
-        <input type="range" id="alphamed_value" min="1" max="4" value="1"><br/>
+        <input type="range" id="alphamed_value" class="ranger" min="1" max="4" value="1"><br/>
         <input type="submit" id="exec_alphamed" value="Select">
     </div>
     <li><a id="alphacom_filt">α-Complementary Filter</a></li>
     <div id="alphacom_slider" style="font-size: 14px" hidden>
         <br/> α = <span id="outputcom"></span> <br/>
-        <input type="range" id="alphacom_value" min="1" max="4" value="1"><br/>
+        <input type="range" id="alphacom_value" class="ranger" min="1" max="4" value="1"><br/>
         <input type="submit" id="exec_alphacom" value="Select">
     </div>
     <li><a id="alphaqsr_filt">α-Quasi-Range Filter</a></li>
     <div id="alphaqsr_slider" style="font-size: 14px" hidden>
         <br/> α = <span id="outputqsr"></span> <br/>
-        <input type="range" id="alphaqsr_value" min="1" max="3" value="1"><br/>
+        <input type="range" id="alphaqsr_value" class="ranger" min="1" max="3" value="1"><br/>
         <input type="submit" id="exec_alphaqsr" value="Select">
     </div>
     <li><a id="artm_filt">Arithmetic Mean Filter</a></li>
@@ -102,7 +102,7 @@
     <li><a id="contraharm_filt">Contraharmonic-α Mean Filter</a></li>
     <div id="alphach_slider" style="font-size: 14px" hidden>
         <br/> α = <span id="outputch"></span> <br/>
-        <input type="range" id="alphach_value" min="-100" max="100" value="0"><br/>
+        <input type="range" id="alphach_value" class="ranger" min="-100" max="100" value="0"><br/>
         <input type="submit" id="exec_alphach" value="Select">
     </div>
     <li><a id="power_filt">Power-α Mean Filter</a></li>
@@ -110,10 +110,10 @@
         <br/> Selectati tipul de putere pe care vreti sa-l implementati: <br/>
         <input type="radio" id="alphapow" name="alphapow">
         <label for="alphapow">α = <span id="outputpow"></span></label><br/>
-            <input type="range" id="alphapow_value" min="1" max="100" value="1"><br/>
+            <input type="range" id="alphapow_value" class="ranger" min="1" max="100" value="1"><br/>
         <input type="radio" id="alphapow2" name="alphapow">
         <label for="alphapow2">1/α = <span id="outputpow2"></span></label><br/>
-            <input type="range" id="alphapow2_value" min="1" max="100" value="1"><br/>
+            <input type="range" id="alphapow2_value" class="ranger" min="1" max="100" value="1"><br/>
         <input type="submit" id="exec_alphapow" value="Select">
     </div>
 </ul>

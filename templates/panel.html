@@ -1,6 +1,29 @@
 <br>
 <ul id="ul_right">
-    <!-- <li><a>Test</a></li> -->
+    <li><a id="bright">Brightness</a></li>
+    <div id="bright_slider" style="font-size: 14px" hidden>
+        <br/> Nivel luminozitate: <span id="outputbright"></span> <br/>
+        <input type="range" id="bright_value" class="ranger" min="0" max="100" value="50"><br/>
+        <input type="submit" id="exec_bright" value="Select imaginea curenta">
+    </div>
+    <li><a id="contrast">Contrast</a></li>
+    <div id="contrast_slider" style="font-size: 14px" hidden>
+        <br/> Nivel contrast: <span id="outputcontrast"></span> <br/>
+        <input type="range" id="contrast_value" class="ranger" min="0" max="100" value="50"><br/>
+        <input type="submit" id="exec_contrast" value="Select imaginea curenta">
+    </div>
+    <li><a id="sharp">Sharpness</a></li>
+    <div id="sharp_slider" style="font-size: 14px" hidden>
+        <br/> Nivel sharpness: <span id="outputsharp"></span> <br/>
+        <input type="range" id="sharp_value" class="ranger" min="0" max="100" value="50"><br/>
+        <input type="submit" id="exec_sharp" value="Select imaginea curenta">
+    </div>
+    <li><a id="sat">Saturation</a></li>
+    <div id="sat_slider" style="font-size: 14px" hidden>
+        <br/> Nivel saturatie: <span id="outputsat"></span> <br/>
+        <input type="range" id="sat_value" class="ranger" min="0" max="100" value="50"><br/>
+        <input type="submit" id="exec_sat" value="Select imaginea curenta">
+    </div>
 </ul>
 <script>
     $('#save').click(function (){
@@ -52,7 +75,7 @@
         });
     })();
     $('#unif_filt').click(function(){
-        $('#mask_opts_unif').show("slow");
+        $('#mask_opts_unif').toggle("slow");
         $('#exec_mask_unif').click(function(){
             $('#mask_opts_unif').hide("slow");
             if(document.getElementById('mask_3x3_unif').checked) {
@@ -79,7 +102,7 @@
         });
     });
     $('#gauss_filt').click(function(){
-        $('#mask_opts_gauss').show("slow");
+        $('#mask_opts_gauss').toggle("slow");
         $('#exec_mask_gauss').click(function(){
             $('#mask_opts_gauss').hide("slow");
             if(document.getElementById('mask_3x3_gauss').checked) {
@@ -106,7 +129,7 @@
         });
     });
     $('#roberts').click(function(){
-        $('#roberts_opt').show("slow");
+        $('#roberts_opt').toggle("slow");
         $('#exec_roberts').click(function(){
             $('#roberts_opt').hide("slow");
             if(document.getElementById('nord_roberts').checked) {
@@ -153,7 +176,7 @@
         });
     });
     $('#prewitt').click(function(){
-        $('#prewitt_opt').show("slow");
+        $('#prewitt_opt').toggle("slow");
         $('#exec_prewitt').click(function(){
             $('#prewitt_opt').hide("slow");
             if(document.getElementById('nord_prewitt').checked) {
@@ -200,7 +223,7 @@
         });
     });
     $('#sobel').click(function(){
-        $('#sobel_opt').show("slow");
+        $('#sobel_opt').toggle("slow");
         $('#exec_sobel').click(function(){
             $('#sobel_opt').hide("slow");
             if(document.getElementById('nord_sobel').checked) {
@@ -247,7 +270,7 @@
         });
     });
     $('#kirsch').click(function(){
-        $('#kirsch_opt').show("slow");
+        $('#kirsch_opt').toggle("slow");
         $('#exec_kirsch').click(function(){
             $('#kirsch_opt').hide("slow");
             if(document.getElementById('nord_kirsch').checked) {
@@ -360,7 +383,7 @@
         });
     });
     $('#alphamed_filt').click(function(){
-        $('#alphamed_slider').show("slow");
+        $('#alphamed_slider').toggle("slow");
         $('#outputmed').text($('#alphamed_value').val());
         $('#alphamed_value').on('input', function(){
             $('#outputmed').text($(this).val());
@@ -391,7 +414,7 @@
         });
     });
     $('#alphacom_filt').click(function(){
-        $('#alphacom_slider').show("slow");
+        $('#alphacom_slider').toggle("slow");
         $('#outputcom').text($('#alphacom_value').val());
         $('#alphacom_value').on('input', function(){
             $('#outputcom').text($(this).val());
@@ -422,7 +445,7 @@
         });
     });
     $('#alphaqsr_filt').click(function(){
-        $('#alphaqsr_slider').show("slow");
+        $('#alphaqsr_slider').toggle("slow");
         $('#outputqsr').text($('#alphaqsr_value').val());
         $('#alphaqsr_value').on('input', function(){
             $('#outputqsr').text($(this).val());
@@ -486,7 +509,7 @@
         });
     });
     $('#contraharm_filt').click(function(){
-        $('#alphach_slider').show("slow");
+        $('#alphach_slider').toggle("slow");
         $('#outputch').text($('#alphach_value').val());
         $('#alphach_value').on('input', function(){
             $('#outputch').text($(this).val());              
@@ -507,7 +530,7 @@
         });
     });
     $('#power_filt').click(function(){
-        $('#power_opts').show('slow');
+        $('#power_opts').toggle('slow');
         $('#outputpow').text($('#alphapow_value').val());
         $('#alphapow_value').on('input', function(){
             $('#outputpow').text($(this).val());              
@@ -546,6 +569,110 @@
                         $('#power_opts').hide('slow');
                     },
                 }); 
+            });
+        });
+    });
+    $('#bright').click(function(){
+        $('#bright_slider').toggle("slow");
+        $('#outputbright').text($('#bright_value').val());
+        $('#bright_value').on('input', function(){
+            $('#outputbright').text($(this).val());
+            var alpha = $('#bright_value').val();
+            $.ajax({
+                type: 'POST',
+                url: '/bright',
+                data: alpha,
+                success: function(resp){
+                    $('#display_image').attr('src',resp.image_url_bright);
+                    $('#loading').text("");
+                },
+            });               
+        });
+        $('#exec_bright').click(function(){
+            var alpha = $('#bright_value').val();
+            $('#bright_slider').hide("slow");
+            $.ajax({
+                type: 'POST',
+                url: '/save_bright',
+                data: alpha,
+            });
+        });
+    });
+    $('#contrast').click(function(){
+        $('#contrast_slider').toggle("slow");
+        $('#outputcontrast').text($('#contrast_value').val());
+        $('#contrast_value').on('input', function(){
+            $('#outputcontrast').text($(this).val());
+            var alpha = $('#contrast_value').val();
+            $.ajax({
+                type: 'POST',
+                url: '/contrast',
+                data: alpha,
+                success: function(resp){
+                    $('#display_image').attr('src',resp.image_url_contrast);
+                    $('#loading').text("");
+                },
+            });               
+        });
+        $('#exec_contrast').click(function(){
+            var alpha = $('#contrast_value').val();
+            $('#contrast_slider').hide("slow");
+            $.ajax({
+                type: 'POST',
+                url: '/save_contrast',
+                data: alpha,
+            });
+        });
+    });
+    $('#sharp').click(function(){
+        $('#sharp_slider').toggle("slow");
+        $('#outputsharp').text($('#sharp_value').val());
+        $('#sharp_value').on('input', function(){
+            $('#outputsharp').text($(this).val());
+            var alpha = $('#sharp_value').val();
+            $.ajax({
+                type: 'POST',
+                url: '/sharp',
+                data: alpha,
+                success: function(resp){
+                    $('#display_image').attr('src',resp.image_url_sharp);
+                    $('#loading').text("");
+                },
+            });               
+        });
+        $('#exec_sharp').click(function(){
+            var alpha = $('#sharp_value').val();
+            $('#sharp_slider').hide("slow");
+            $.ajax({
+                type: 'POST',
+                url: '/save_sharp',
+                data: alpha,
+            });
+        });
+    });
+    $('#sat').click(function(){
+        $('#sat_slider').toggle("slow");
+        $('#outputsat').text($('#sat_value').val());
+        $('#sat_value').on('input', function(){
+            $('#outputsat').text($(this).val());
+            var alpha = $('#sat_value').val();
+            $.ajax({
+                type: 'POST',
+                url: '/sat',
+                data: alpha,
+                success: function(resp){
+                    $('#display_image').attr('src',resp.image_url_sat);
+                    $('#loading').text("");
+                },
+            });               
+        });
+        $('#exec_sat').click(function(){
+            var alpha = $('#sat_value').val();
+            $('#sat_slider').hide("slow");
+            $.ajax({
+                type: 'POST',
+                url: '/save_sat',
+                data: alpha,
             });
         });
     });

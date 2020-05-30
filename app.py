@@ -12,6 +12,7 @@ from sobel_filter.views import sobel_filter
 from kirsch_filter.views import kirsch_filter
 from ord_filters.views import ord_filters
 from mean_filters.views import mean_filters
+from BCSS.views import BCSS
 
 app = Flask(__name__)
 
@@ -27,6 +28,7 @@ app.register_blueprint(sobel_filter)
 app.register_blueprint(kirsch_filter)
 app.register_blueprint(ord_filters)
 app.register_blueprint(mean_filters)
+app.register_blueprint(BCSS)
 
 photos = UploadSet('photos', IMAGES)
 

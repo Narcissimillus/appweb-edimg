@@ -22,6 +22,7 @@ li a {
 li a:hover {
     background-color: #555;
     color: white;
+    cursor: pointer;
   }
 
 #panel_left {
@@ -48,4 +49,12 @@ li a:hover {
   padding: 0;
   width: 200px;
   background-color: #f1f1f1;
+}
+
+.ranger {
+  cursor: grab;
+}
+
+.ranger:active {
+  cursor: grabbing;
 }
