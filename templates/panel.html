@@ -4,28 +4,56 @@
     <div id="bright_slider" style="font-size: 14px" hidden>
         <br/> Nivel luminozitate: <span id="outputbright"></span> <br/>
         <input type="range" id="bright_value" class="ranger" min="0" max="100" value="50"><br/>
-        <input type="submit" id="exec_bright" value="Select imaginea curenta">
+        <input type="submit" id="exec_bright" value="Select modificarea">
     </div>
     <li><a id="contrast">Contrast</a></li>
     <div id="contrast_slider" style="font-size: 14px" hidden>
         <br/> Nivel contrast: <span id="outputcontrast"></span> <br/>
         <input type="range" id="contrast_value" class="ranger" min="0" max="100" value="50"><br/>
-        <input type="submit" id="exec_contrast" value="Select imaginea curenta">
+        <input type="submit" id="exec_contrast" value="Select modificarea">
     </div>
     <li><a id="sharp">Sharpness</a></li>
     <div id="sharp_slider" style="font-size: 14px" hidden>
         <br/> Nivel sharpness: <span id="outputsharp"></span> <br/>
         <input type="range" id="sharp_value" class="ranger" min="0" max="100" value="50"><br/>
-        <input type="submit" id="exec_sharp" value="Select imaginea curenta">
+        <input type="submit" id="exec_sharp" value="Select modificarea">
     </div>
     <li><a id="sat">Saturation</a></li>
     <div id="sat_slider" style="font-size: 14px" hidden>
         <br/> Nivel saturatie: <span id="outputsat"></span> <br/>
         <input type="range" id="sat_value" class="ranger" min="0" max="100" value="50"><br/>
-        <input type="submit" id="exec_sat" value="Select imaginea curenta">
+        <input type="submit" id="exec_sat" value="Salveaza modificarea">
+    </div>
+    <li><a id="autocont">Auto-Contrast</a></li>
+    <li><a id="scalare">Scale</a></li>
+    <div id="scale_slider" style="font-size: 14px" hidden>
+        <br/> Nivel scalare: <span id="outputscale"></span> <br/>
+        <input type="range" id="scale_value" class="ranger" min="0" max="100" value="50"><br/>
+        <input type="submit" id="exec_scale" value="Salveaza modificarea">
+    </div>
+    <li><a id="flip">Flip</a></li>
+    <li><a id="mirror">Mirror</a></li>
+    <li><a id="invert">Invert (Negative)</a></li>
+    <li><a id="crop">Crop</a></li>
+    <div id="crop_sliders" style="font-size: 14px" hidden>
+        <br/> Nivel taietura stanga(%): <span id="outputleft"></span> <br/>
+        <input type="range" id="left_crop_value" class="ranger" min="0" max="100" value="0"><br/>
+        <br/> Nivel taietura sus(%): <span id="outputupper"></span> <br/>
+        <input type="range" id="upper_crop_value" class="ranger" min="0" max="100" value="0"><br/>
+        <br/> Nivel taietura dreapta(%): <span id="outputright"></span> <br/>
+        <input type="range" id="right_crop_value" class="ranger" min="0" max="100" value="100"><br/>
+        <br/> Nivel taietura jos(%)k: <span id="outputlower"></span> <br/>
+        <input type="range" id="lower_crop_value" class="ranger" min="0" max="100" value="100"><br/>
+        <input type="submit" id="exec_crop" value="Salveaza modificarea">
     </div>
 </ul>
 <script>
+    $(document).ready(function ()
+    {           
+        $('.NO-CACHE').attr('src',function () { 
+            return $(this).attr('src') + "?a=" + performance.now() 
+        });
+    });
     $('#save').click(function (){
         var a  = document.createElement('a');
         a.href = $('#display_image').attr("src")
@@ -583,7 +611,7 @@
                 url: '/bright',
                 data: alpha,
                 success: function(resp){
-                    $('#display_image').attr('src',resp.image_url_bright);
+                    $('#display_image').attr('src',resp.image_url_bright + "?a=" + performance.now());
                     $('#loading').text("");
                 },
             });               
@@ -609,7 +637,7 @@
                 url: '/contrast',
                 data: alpha,
                 success: function(resp){
-                    $('#display_image').attr('src',resp.image_url_contrast);
+                    $('#display_image').attr('src',resp.image_url_contrast + "?a=" + performance.now());
                     $('#loading').text("");
                 },
             });               
@@ -635,7 +663,7 @@
                 url: '/sharp',
                 data: alpha,
                 success: function(resp){
-                    $('#display_image').attr('src',resp.image_url_sharp);
+                    $('#display_image').attr('src',resp.image_url_sharp + "?a=" + performance.now());
                     $('#loading').text("");
                 },
             });               
@@ -661,7 +689,7 @@
                 url: '/sat',
                 data: alpha,
                 success: function(resp){
-                    $('#display_image').attr('src',resp.image_url_sat);
+                    $('#display_image').attr('src',resp.image_url_sat + "?a=" + performance.now());
                     $('#loading').text("");
                 },
             });               
@@ -673,6 +701,159 @@
                 type: 'POST',
                 url: '/save_sat',
                 data: alpha,
+            });
+        });
+    });
+    $('#autocont').click(function(){
+        $('#loading').text("Se incarca...");
+        $.ajax({
+            type: 'POST',
+            url: '/autocont',
+            success: function(resp){
+                $('#display_image').attr('src',resp.image_url_autocont + "?a=" + performance.now());
+                $('#loading').text("");
+            },
+        });
+    });
+    $('#scalare').click(function(){
+        $('#scale_slider').toggle("slow");
+        $('#outputscale').text($('#scale_value').val());
+        $('#scale_value').on('input', function(){
+            $('#outputscale').text($(this).val());
+            var alpha = $('#scale_value').val();
+            $.ajax({
+                type: 'POST',
+                url: '/scalare',
+                data: alpha,
+                success: function(resp){
+                    $('#display_image').attr('src',resp.image_url_scale + "?a=" + performance.now());
+                    $('#loading').text("");
+                },
+            });               
+        });
+        $('#exec_scale').click(function(){
+            var alpha = $('#scale_value').val();
+            $('#scale_slider').hide("slow");
+            $.ajax({
+                type: 'POST',
+                url: '/save_scale',
+                data: alpha,
+            });
+        });
+    });
+    $('#flip').click(function(){
+        $('#loading').text("Se incarca...");
+        $.ajax({
+            type: 'POST',
+            url: '/flip_image',
+            success: function(resp){
+                $('#display_image').attr('src',resp.image_url_flip + "?a=" + performance.now());
+                $('#loading').text("");
+            },
+        });
+    });
+    $('#mirror').click(function(){
+        $('#loading').text("Se incarca...");
+        $.ajax({
+            type: 'POST',
+            url: '/mirror_image',
+            success: function(resp){
+                $('#display_image').attr('src',resp.image_url_mirror + "?a=" + performance.now());
+                $('#loading').text("");
+            },
+        });
+    });
+    $('#invert').click(function(){
+        $('#loading').text("Se incarca...");
+        $.ajax({
+            type: 'POST',
+            url: '/invert_image',
+            success: function(resp){
+                $('#display_image').attr('src',resp.image_url_invert + "?a=" + performance.now());
+                $('#loading').text("");
+            },
+        });
+    });
+    $('#crop').click(function(){
+        $('#crop_sliders').toggle("slow");
+        $('#outputleft').text($('#left_crop_value').val());
+        $('#left_crop_value').on('input', function(){
+            $('#outputleft').text($(this).val());
+            var left = $('#left_crop_value').val();
+            var upper = $('#upper_crop_value').val();
+            var right = $('#right_crop_value').val();
+            var lower = $('#lower_crop_value').val();
+            $.ajax({
+                type: 'POST',
+                url: '/cropper',
+                data: {left: left, upper: upper, right: right, lower: lower},
+                success: function(resp){
+                    $('#display_image').attr('src',resp.image_url_crop + "?a=" + performance.now());
+                    $('#loading').text("");
+                },
+            });               
+        });
+        $('#outputupper').text($('#upper_crop_value').val());
+        $('#upper_crop_value').on('input', function(){
+            $('#outputupper').text($(this).val());
+            var left = $('#left_crop_value').val();
+            var upper = $('#upper_crop_value').val();
+            var right = $('#right_crop_value').val();
+            var lower = $('#lower_crop_value').val();
+            $.ajax({
+                type: 'POST',
+                url: '/cropper',
+                data: {left: left, upper: upper, right: right, lower: lower},
+                success: function(resp){
+                    $('#display_image').attr('src',resp.image_url_crop + "?a=" + performance.now());
+                    $('#loading').text("");
+                },
+            });               
+        });
+        $('#outputright').text($('#right_crop_value').val());
+        $('#right_crop_value').on('input', function(){
+            $('#outputright').text($(this).val());
+            var left = $('#left_crop_value').val();
+            var upper = $('#upper_crop_value').val();
+            var right = $('#right_crop_value').val();
+            var lower = $('#lower_crop_value').val();
+            $.ajax({
+                type: 'POST',
+                url: '/cropper',
+                data: {left: left, upper: upper, right: right, lower: lower},
+                success: function(resp){
+                    $('#display_image').attr('src',resp.image_url_crop + "?a=" + performance.now());
+                    $('#loading').text("");
+                },
+            });               
+        });
+        $('#outputlower').text($('#lower_crop_value').val());
+        $('#lower_crop_value').on('input', function(){
+            $('#outputlower').text($(this).val());
+            var left = $('#left_crop_value').val();
+            var upper = $('#upper_crop_value').val();
+            var right = $('#right_crop_value').val();
+            var lower = $('#lower_crop_value').val();
+            $.ajax({
+                type: 'POST',
+                url: '/cropper',
+                data: {left: left, upper: upper, right: right, lower: lower},
+                success: function(resp){
+                    $('#display_image').attr('src',resp.image_url_crop + "?a=" + performance.now());
+                    $('#loading').text("");
+                },
+            });               
+        });
+        $('#exec_crop').click(function(){
+            var left = $('#left_crop_value').val();
+            var upper = $('#upper_crop_value').val();
+            var right = $('#right_crop_value').val();
+            var lower = $('#lower_crop_value').val();
+            $('#crop_sliders').hide("slow");
+            $.ajax({
+                type: 'POST',
+                url: '/save_crop',
+                data: {left: left, upper: upper, right: right, lower: lower},
             });
         });
     });

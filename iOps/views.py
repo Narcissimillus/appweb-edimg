@@ -1,0 +1,156 @@
+from flask import Blueprint, Flask, request, url_for, jsonify
+from PIL import Image, ImageOps
+from delete_processed_images.views import delete_images
+
+iOps = Blueprint('iOps', __name__, template_folder='templates')
+
+@iOps.route('/autocont', methods=['GET', 'POST'])
+def autocont():
+    if request.method == "POST":
+        try:
+            delete_images()
+            image_src = 'static/uploads/img.jpg'
+            im = Image.open(image_src)
+            im_autocont = ImageOps.autocontrast(im) # Selecteaza cel mai luminos pixel si il face alb, si cel mai intunecat pixel si il face negru, restul se normalizeaza
+            im_autocont.save('static/uploads/img_autocontrast.jpg')
+            image_url_autocont = url_for('static',filename="uploads/img_autocontrast.jpg")
+            return jsonify({'image_url_autocont' : image_url_autocont})
+        except Exception as e:
+            print(e)
+
+@iOps.route('/scalare', methods=['GET', 'POST'])
+def scalare():
+    if request.method == "POST":
+        try:
+            delete_images()
+            image_src = 'static/uploads/img.jpg'
+            im = Image.open(image_src)
+            # Convertim datele primite care apartin [0,100] in date care apartin [0,2]
+            # Pentru factor = 1 imaginea este cea originala, valori din ce in ce mai mici (<1) imaginea se micsoreaza
+            # si pentru valori din ce in ce mai mari (>1) imaginea se mareste
+            factor = int(request.get_data())*2/100
+            im_scale = ImageOps.scale(im, factor)
+            imgname = 'img_scale_' + str(factor) + '.jpg'
+            im_scale.save('static/uploads/' + imgname)
+            image_url_scale = url_for('static',filename="uploads/" + imgname)
+            return jsonify({'image_url_scale' : image_url_scale})
+        except Exception as e:
+            print(e)
+
+# Salveaza imaginea cu ultima valoare selectata de utilizator astfel incat sa se poata modifica in continuare si pentru alte procese (contrast, saturatie etc.)
+@iOps.route('/save_scale', methods=['GET', 'POST'])
+def save_scale():
+    if request.method == "POST":
+        try:
+            image_src = 'static/uploads/img.jpg'
+            im = Image.open(image_src)
+            factor = int(request.get_data())*2/100
+            im = ImageOps.scale(im, factor)
+            im.save('static/uploads/img.jpg')
+        except Exception as e:
+            print(e)
+
+@iOps.route('/flip_image', methods=['GET', 'POST'])
+def flip_image():
+    if request.method == "POST":
+        try:
+            delete_images()
+            image_src = 'static/uploads/img.jpg'
+            im = Image.open(image_src)
+            im = ImageOps.flip(im) # Intoarce imaginea vertical (de sus in jos)
+            im.save('static/uploads/img_flipped.jpg')
+            im.save('static/uploads/img.jpg')
+            image_url_flip = url_for('static',filename="uploads/img_flipped.jpg")
+            return jsonify({'image_url_flip' : image_url_flip})
+        except Exception as e:
+            print(e)
+
+@iOps.route('/mirror_image', methods=['GET', 'POST'])
+def mirror_image():
+    if request.method == "POST":
+        try:
+            delete_images()
+            image_src = 'static/uploads/img.jpg'
+            im = Image.open(image_src)
+            im= ImageOps.mirror(im) # Intoarce imaginea orizontal (in oglinda, de la stanga la dreapta)
+            im.save('static/uploads/img_mirrored.jpg')
+            im.save('static/uploads/img.jpg')
+            image_url_mirror = url_for('static',filename="uploads/img_mirrored.jpg")
+            return jsonify({'image_url_mirror' : image_url_mirror})
+        except Exception as e:
+            print(e)
+
+@iOps.route('/invert_image', methods=['GET', 'POST'])
+def invert_image():
+    if request.method == "POST":
+        try:
+            delete_images()
+            image_src = 'static/uploads/img.jpg'
+            im = Image.open(image_src)
+            im = ImageOps.invert(im) # Inverseaza culorile imaginii => negativul imaginii
+            im.save('static/uploads/img_inverted.jpg')
+            im.save('static/uploads/img.jpg')
+            image_url_invert = url_for('static',filename="uploads/img_inverted.jpg")
+            return jsonify({'image_url_invert' : image_url_invert})
+        except Exception as e:
+            print(e)
+
+@iOps.route('/cropper', methods=['GET', 'POST'])
+def cropper():
+    if request.method == "POST":
+        try:
+            delete_images()
+            image_src = 'static/uploads/img.jpg'
+            im = Image.open(image_src)
+            width, height = im.size # Latimea si inaltimea imaginii
+            box = request.get_data(as_text=True)
+            # Datele primite sunt separate in left, upper, right, lower si stocate toate intr-un tuple
+            box = box.split('&')
+            box_left = box.pop(0)
+            box_left =  box_left.split('=')
+            box_left = int(box_left.pop())*width/100 # Datele primite de la client sunt transformate din procente in dimensiuni in pixeli ale imaginii
+            box_upper = box.pop(0)
+            box_upper =  box_upper.split('=')
+            box_upper = int(box_upper.pop())*height/100
+            box_right = box.pop(0)
+            box_right =  box_right.split('=')
+            box_right = int(box_right.pop())*width/100
+            box_lower = box.pop(0)
+            box_lower =  box_lower.split('=')
+            box_lower = int(box_lower.pop())*height/100
+            box_tuple = box_left, box_upper, box_right, box_lower # Tuple-ul unde sunt memorate datele modificate
+            im_crop = im.crop(box_tuple) # Se taie imaginea dupa coordonatele imaginii stanga,sus,dreapta,jos
+            imgname = 'img_crop_' + str(box_tuple[0]) + str(box_tuple[1]) + str(box_tuple[2]) + str(box_tuple[3]) + '.jpg'
+            im_crop.save('static/uploads/' + imgname)
+            image_url_crop = url_for('static',filename="uploads/" + imgname)
+            return jsonify({'image_url_crop' : image_url_crop})
+        except Exception as e:
+            print(e)
+
+# Salveaza imaginea cu ultima valoare selectata de utilizator astfel incat sa se poata modifica in continuare si pentru alte procese (contrast, saturatie etc.)
+@iOps.route('/save_crop', methods=['GET', 'POST'])
+def save_crop():
+    if request.method == "POST":
+        try:
+            image_src = 'static/uploads/img.jpg'
+            im = Image.open(image_src)
+            width, height = im.size
+            box = request.get_data(as_text=True)
+            box = box.split('&')
+            box_left = box.pop(0)
+            box_left =  box_left.split('=')
+            box_left = int(box_left.pop())*width/100
+            box_upper = box.pop(0)
+            box_upper =  box_upper.split('=')
+            box_upper = int(box_upper.pop())*height/100
+            box_right = box.pop(0)
+            box_right =  box_right.split('=')
+            box_right = int(box_right.pop())*width/100
+            box_lower = box.pop(0)
+            box_lower =  box_lower.split('=')
+            box_lower = int(box_lower.pop())*height/100
+            box_tuple = box_left, box_upper, box_right, box_lower
+            im = im.crop(box_tuple)
+            im.save('static/uploads/img.jpg')
+        except Exception as e:
+            print(e)

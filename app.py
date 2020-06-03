@@ -13,6 +13,7 @@ from kirsch_filter.views import kirsch_filter
 from ord_filters.views import ord_filters
 from mean_filters.views import mean_filters
 from BCSS.views import BCSS
+from iOps.views import iOps
 
 app = Flask(__name__)
 
@@ -29,12 +30,12 @@ app.register_blueprint(kirsch_filter)
 app.register_blueprint(ord_filters)
 app.register_blueprint(mean_filters)
 app.register_blueprint(BCSS)
+app.register_blueprint(iOps)
 
 photos = UploadSet('photos', IMAGES)
 
 app.config['UPLOADED_PHOTOS_DEST'] = 'static/uploads'
 configure_uploads(app, photos)
-
 
 @app.route('/')
 def index():

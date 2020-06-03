@@ -1,9 +1,10 @@
 from flask import Blueprint, Flask, request, url_for, jsonify
 from PIL import Image, ImageEnhance
 from delete_processed_images.views import delete_images
-import numpy as np
 
 BCSS = Blueprint('BCSS', __name__, template_folder='templates')
+
+# Se foloseste aceeasi interfata in modulul ImageEnhance
 
 @BCSS.route('/bright', methods=['GET', 'POST'])
 def bright():
@@ -12,9 +13,13 @@ def bright():
             delete_images()
             image_src = 'static/uploads/img.jpg'
             im = Image.open(image_src)
+            # enhancer reprezinta o imagine pregatita pentru a ise modifica luminozitatea, acesteia i se va aplica o metoda comuna enhace(factor), adica interfata
             enhancer = ImageEnhance.Brightness(im)
+            # Convertim datele primite care apartin [0,100] in date care apartin [0,2]
+            # Pentru factor = 1 imaginea este cea originala, valori din ce in ce mai mici (<1) imaginea devine din ce in ce mai intunecata 
+            # si pentru valori din ce in ce mai mari (>1) imaginea devine din ce in ce mai luminata
             factor = int(request.get_data())*2/100
-            imgname = 'img_bright_' + str(factor) + '.jpg'
+            imgname = 'img_bright_' + str(factor) + '.jpg' # o noua imagine este salvata la fiecare valoare selectata
             im_bright = enhancer.enhance(factor)
             im_bright.save('static/uploads/' + imgname)
             image_url_bright = url_for('static',filename="uploads/" + imgname)
@@ -23,6 +28,7 @@ def bright():
             print(e)
 
 @BCSS.route('/save_bright', methods=['GET', 'POST'])
+# Salveaza imaginea cu ultima valoare selectata de utilizator astfel incat sa se poata modifica in continuare si pentru alte procese (contrast, saturatie etc.)
 def save_bright():
     if request.method == "POST":
         try:
@@ -35,6 +41,7 @@ def save_bright():
         except Exception as e:
             print(e)
 
+# Idem ca la Brightness
 @BCSS.route('/contrast', methods=['GET', 'POST'])
 def contrast():
     if request.method == "POST":
@@ -52,6 +59,7 @@ def contrast():
         except Exception as e:
             print(e)
 
+# Idem ca la Brightness
 @BCSS.route('/save_contrast', methods=['GET', 'POST'])
 def save_contrast():
     if request.method == "POST":
@@ -65,6 +73,7 @@ def save_contrast():
         except Exception as e:
             print(e)
 
+# Idem ca la Brightness
 @BCSS.route('/sharp', methods=['GET', 'POST'])
 def sharp():
     if request.method == "POST":
@@ -82,6 +91,7 @@ def sharp():
         except Exception as e:
             print(e)
 
+# Idem ca la Brightness
 @BCSS.route('/save_sharp', methods=['GET', 'POST'])
 def save_sharp():
     if request.method == "POST":
@@ -95,6 +105,7 @@ def save_sharp():
         except Exception as e:
             print(e)
 
+# Idem ca la Brightness
 @BCSS.route('/sat', methods=['GET', 'POST'])
 def sat():
     if request.method == "POST":
@@ -112,6 +123,7 @@ def sat():
         except Exception as e:
             print(e)
 
+# Idem ca la Brightness
 @BCSS.route('/save_sat', methods=['GET', 'POST'])
 def save_sat():
     if request.method == "POST":
