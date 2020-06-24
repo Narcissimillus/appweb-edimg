@@ -1,2 +1,2 @@
 # appweb-edimg
-Proiect Licenta - Aplicatie Web pentru Procesarea de Imagini
+Proiect Licenta - Crearea unei aplicatii web pentru procesarea imaginilor digitale
