@@ -1,0 +1,87 @@
+<br>
+<ul id="ul_right">
+    <li class="li_right"><a id="bright">Brightness</a></li>
+    <div id="bright_slider" style="font-size: 14px" hidden>
+        <br/> Nivel luminozitate: <span id="outputbright"></span> <br/>
+        <input type="range" id="bright_value" class="slider" min="0" max="100" value="50"><br/>
+        <input type="submit" id="exec_bright" value="Select modificarea">
+    </div>
+    <li class="li_right"><a id="contrast">Contrast</a></li>
+    <div id="contrast_slider" style="font-size: 14px" hidden>
+        <br/> Nivel contrast: <span id="outputcontrast"></span> <br/>
+        <input type="range" id="contrast_value" class="slider" min="0" max="100" value="50"><br/>
+        <input type="submit" id="exec_contrast" value="Select modificarea">
+    </div>
+    <li class="li_right"><a id="sharp">Sharpness</a></li>
+    <div id="sharp_slider" style="font-size: 14px" hidden>
+        <br/> Nivel claritate: <span id="outputsharp"></span> <br/>
+        <input type="range" id="sharp_value" class="slider" min="0" max="100" value="50"><br/>
+        <input type="submit" id="exec_sharp" value="Select modificarea">
+    </div>
+    <li class="li_right"><a id="sat">Saturation</a></li>
+    <div id="sat_slider" style="font-size: 14px" hidden>
+        <br/> Nivel saturatie: <span id="outputsat"></span> <br/>
+        <input type="range" id="sat_value" class="slider" min="0" max="100" value="50"><br/>
+        <input type="submit" id="exec_sat" value="Salveaza modificarea">
+    </div>
+    <li class="li_right"><a id="autocont">Auto-Contrast</a></li>
+    <li class="li_right"><a id="scalare">Scale</a></li>
+    <div id="scale_slider" style="font-size: 14px" hidden>
+        <br/> Nivel scalare: <span id="outputscale"></span> <br/>
+        <input type="range" id="scale_value" class="slider" min="0" max="100" value="50"><br/>
+        <input type="submit" id="exec_scale" value="Salveaza modificarea">
+    </div>
+    <li class="li_right"><a id="flip">Flip</a></li>
+    <li class="li_right"><a id="mirror">Mirror</a></li>
+    <li class="li_right"><a id="invert">Invert (Negative)</a></li>
+    <li class="li_right"><a id="crop">Crop</a></li>
+    <div id="crop_sliders" style="font-size: 14px" hidden>
+        <br/> Nivel taietura stanga(%): <span id="outputleft"></span> <br/>
+        <input type="range" id="left_crop_value" class="slider" min="0" max="100" value="0"><br/>
+        <br/> Nivel taietura sus(%): <span id="outputupper"></span> <br/>
+        <input type="range" id="upper_crop_value" class="slider" min="0" max="100" value="0"><br/>
+        <br/> Nivel taietura dreapta(%): <span id="outputright"></span> <br/>
+        <input type="range" id="right_crop_value" class="slider" min="0" max="100" value="100"><br/>
+        <br/> Nivel taietura jos(%): <span id="outputlower"></span> <br/>
+        <input type="range" id="lower_crop_value" class="slider" min="0" max="100" value="100"><br/>
+        <input type="submit" id="exec_crop" value="Salveaza modificarea">
+    </div>
+    <li class="li_right"><a id="rotate_image">Rotate</a></li>
+    <div id="rotate_slider" style="font-size: 14px" hidden>
+        <br/> Unghiul de rotatie (in grade): <span id="outputrotate"></span> <br/>
+        <input type="range" id="rotate_value" class="slider" min="0" max="360" value="0"><br/>
+        <input type="submit" id="exec_rotate" value="Salveaza modificarea">
+    </div>
+    <li class="li_right"><a id="rotate_90_image">Rotate 90°</a></li>
+    <li class="li_right"><a id="equalizer">Equalize Histogram</a></li>
+    <li class="li_right"><a id="blur_image">Blur</a></li>
+    <li class="li_right"><a id="bblur">Box Blur</a></li>
+    <div id="bblur_slider" style="font-size: 14px" hidden>
+        <br/> Valoarea razei: <span id="outputbblur"></span> <br/>
+        <input type="range" id="bblur_value" class="slider" min="0" max="20" value="0"><br/>
+        <input type="submit" id="exec_bblur" value="Salveaza modificarea">
+    </div>
+    <li class="li_right"><a id="gblur">Gaussian Blur</a></li>
+    <div id="gblur_slider" style="font-size: 14px" hidden>
+        <br/> Valoarea razei: <span id="outputgblur"></span> <br/>
+        <input type="range" id="gblur_value" class="slider" min="0" max="20" value="0"><br/>
+        <input type="submit" id="exec_gblur" value="Salveaza modificarea">
+    </div>
+    <li class="li_right"><a id="sharpen_image">Sharpen</a></li>
+    <li class="li_right"><a id="unsharp">Unsharp Mask</a></li>
+    <div id="unsharp_sliders" style="font-size: 14px" hidden>
+        <br/> Valoarea razei: <span id="outputradius"></span> <br/>
+        <input type="range" id="radius_value" class="slider" min="0" max="100" value="0"><br/>
+        <br/> Valoarea concetratiei(%): <span id="outputstrength"></span> <br/>
+        <input type="range" id="strength_value" class="slider" min="0" max="100" value="0"><br/>
+        <br/> Valoarea pragului: <span id="outputthreshold"></span> <br/>
+        <input type="range" id="threshold_value" class="slider" min="0" max="100" value="0"><br/>
+        <input type="submit" id="exec_unsharp" value="Salveaza modificarea">
+    </div>
+    <li class="li_right"><a id="contour_image">Contour</a></li>
+    <li class="li_right"><a id="detail_image">Detail</a></li>
+    <li class="li_right"><a id="edge_enhance_image">Edge Enhance</a></li>
+    <li class="li_right"><a id="emboss_image">Emboss</a></li>
+    <li class="li_right"><a id="smooth_image">Smooth</a></li>
+</ul>
+<script type="text/javascript" src="{{ url_for('static', filename='js/panel_script.js') }}"></script>

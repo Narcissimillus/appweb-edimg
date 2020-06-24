@@ -2,7 +2,6 @@
 
 {% block head %}
 <title> Editor Imagine </title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -13,23 +12,22 @@
 <div id="middle">
 <h1  id="header"> Upload new image </h1>
 <form id="FileForm" name="imgfile" enctype="multipart/form-data">
-    <input type="file" name="imgfile" id="imgfile" />
-    <input type="button" name="submit" value="submit" onclick="StartProcess()" />
+    <input type="file" name="imgfile" id="imgfile"  accept="image/*"/>
 </form>
 
 <img class="NO-CACHE" id="display_image" src=""> <br>
 <p id="loading" style="font-size: 12px"></p>
 <button id="upload_new" onclick="window.location.reload();" hidden>Upload new image</button> 
-<button id="save" download="img.jpg" hidden>Save Image</button>
+<button id="save" download="img.png" hidden>Save Image</button>
 </div>
 
-<div id="panel">
+<div id="panel_right">
 
 </div>
 </div>
 
 <script>
-    function StartProcess(){
+    $('#imgfile').change(function(){
         var formDataRaw = $('#FileForm')[0];
         var form_data = new FormData(formDataRaw);
         $.ajax({
@@ -37,19 +35,26 @@
             url: '/uploadimg',
             data: form_data,
             contentType: false,
-            cache: false,
             processData: false,
             async: false,
-            success: function(data){
-                $('#header').text("Uploaded");
-                $('#FileForm').slideUp("fast");
-                $('#display_image').attr('src',data.image_url);
-                $('#upload_new').show();
-                $('#save').show();
-                $('#panel_left').append(data.rendered_left);
-                $('#panel').append(data.rendered);
+            success: function(resp){
+                if(resp.error == 1){
+                    $('#middle').prepend("<p>Eroare: Este permisa doar incarcarea de imagini (extensii permise: 'jpg', 'jpe', 'jpeg', 'png', 'gif', 'svg', 'bmp').</p>");
+                    $('#header').text("");
+                    $('#FileForm').hide();
+                    $('#upload_new').show();
+                }
+                else{
+                    $('#header').text("Uploaded");
+                    $('#FileForm').slideUp("fast");
+                    $('#display_image').attr('src',resp.image_url);
+                    $('#upload_new').show();
+                    $('#save').show();
+                    $('#panel_left').append(resp.rendered_left);
+                    $('#panel_right').append(resp.rendered_right);
+                }
             },
         });
-    };
+    });
 </script>
 {% endblock %}

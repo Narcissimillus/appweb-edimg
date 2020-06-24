@@ -3,28 +3,6 @@ body {
     font-family: sans-serif;
 }
 
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 200px;
-    background-color: #f1f1f1;
-  }
-  
-li a {
-    display: block;
-    color: #000;
-    padding: 8px 16px;
-    text-decoration: none;
-  }
-  
-
-li a:hover {
-    background-color: #555;
-    color: white;
-    cursor: pointer;
-  }
-
 #panel_left {
     float: left;
     width: 25%;
@@ -36,25 +14,52 @@ li a:hover {
     text-align: center;
 }
 
-#panel {
+#panel_right {
     float: right;
     width: 25%;
     text-align: right;
 }
 
-#ul_right {
-  list-style-type: none;
-  margin-left:auto; 
-  margin-right:0;
-  padding: 0;
-  width: 200px;
-  background-color: #f1f1f1;
+#ul_left {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
 }
 
-.ranger {
+#ul_right {
+    list-style-type: none;
+    margin-left:auto; 
+    margin-right:0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+  }
+  
+li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.li_left a:hover {
+    background-color: #c84834;
+    color: white;
+    cursor: pointer;
+}
+
+.li_right a:hover {
+    background-color: #ff9a00;
+    color: white;
+    cursor: pointer;
+}
+
+.slider {
   cursor: grab;
 }
 
-.ranger:active {
+.slider:active {
   cursor: grabbing;
 }

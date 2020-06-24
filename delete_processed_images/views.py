@@ -1,4 +1,4 @@
-from flask import Blueprint, Flask, render_template
+from flask import Blueprint
 import os
 
 delete_processed_images = Blueprint('delete_processed_images', __name__, template_folder='templates')

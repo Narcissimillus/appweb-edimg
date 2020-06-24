@@ -1,8 +1,13 @@
-<ul>
-    <li><a id="original">Original</a></li>
-    <li><a id="rgb2gray">RGB2GRAY</a></li>
-    <li><a id="im2bw">IM2BW</a></li>
-    <li><a id="unif_filt">Uniform Mask Filter</a></li>
+<ul id="ul_left">
+    <li class="li_left"><a id="original">Original</a></li>
+    <li class="li_left"><a id="rgb2gray">RGB2GRAY</a></li>
+    <li class="li_left"><a id="im2bw">IM2BW</a></li>
+    <div id="im2bw_slider" style="font-size: 14px" hidden>
+        <br/> Valoare prag: <span id="outputim2bw"></span> <br/>
+        <input type="range" id="im2bw_value" class="slider" min="0" max="255" value="0"><br/>
+        <input type="submit" id="exec_im2bw" value="Select">
+    </div>
+    <li class="li_left"><a id="unif_filt">Uniform Mask Filter</a></li>
     <div id="mask_opts_unif" style="font-size: 14px" hidden>
         <br/> Selectati dimensiunea mastii pe care doriti sa o aplicati: <br/>
         <input type="radio" id="mask_3x3_unif" name="mask_opt_unif">
@@ -11,7 +16,7 @@
         <label for="mask_5x5_unif">5x5 Mask Filter</label><br>
         <input type="submit" id="exec_mask_unif" value="Select">
     </div>
-    <li><a id="gauss_filt">Gauss Mask Filter</a></li>
+    <li class="li_left"><a id="gauss_filt">Gauss Mask Filter</a></li>
     <div id="mask_opts_gauss" style="font-size: 14px" hidden>
         <br/> Selectati dimensiunea mastii pe care doriti sa o aplicati: <br/>
         <input type="radio" id="mask_3x3_gauss" name="mask_opt_gauss">
@@ -20,7 +25,7 @@
         <label for="mask_5x5_gauss">5x5 Mask Filter</label><br>
         <input type="submit" id="exec_mask_gauss" value="Select">
     </div>
-    <li><a id="roberts">Roberts Filter</a></li>
+    <li class="li_left"><a id="roberts">Roberts Filter</a></li>
     <div id="roberts_opt" style="font-size: 14px" hidden>
         <br/> Selectati punctul cardinal al filtrului pe care doriti sa-l aplicati: <br/>
         <input type="radio" id="nord_roberts" name="pct_card_roberts">
@@ -33,7 +38,7 @@
         <label for="vest_roberts">Vest</label><br/>
         <input type="submit" id="exec_roberts" value="Select">
     </div>
-    <li><a id="prewitt">Prewitt Filter</a></li>
+    <li class="li_left"><a id="prewitt">Prewitt Filter</a></li>
     <div id="prewitt_opt" style="font-size: 14px" hidden>
         <br/> Selectati punctul cardinal al filtrului pe care doriti sa-l aplicati: <br/>
         <input type="radio" id="nord_prewitt" name="pct_card_prewitt">
@@ -46,7 +51,7 @@
         <label for="vest_prewitt">Vest</label><br/>
         <input type="submit" id="exec_prewitt" value="Select">
     </div>
-    <li><a id="sobel">Sobel Filter</a></li>
+    <li class="li_left"><a id="sobel">Sobel Filter</a></li>
     <div id="sobel_opt" style="font-size: 14px" hidden>
         <br/> Selectati punctul cardinal al filtrului pe care doriti sa-l aplicati: <br/>
         <input type="radio" id="nord_sobel" name="pct_card_sobel">
@@ -59,7 +64,7 @@
         <label for="vest_sobel">Vest</label><br/>
         <input type="submit" id="exec_sobel" value="Select">
     </div>
-    <li><a id="kirsch">Kirsch Filter</a></li>
+    <li class="li_left"><a id="kirsch">Kirsch Filter</a></li>
     <div id="kirsch_opt" style="font-size: 14px" hidden>
         <br/> Selectati punctul cardinal al filtrului pe care doriti sa-l aplicati: <br/>
         <input type="radio" id="nord_kirsch" name="pct_card_kirsch">
@@ -72,48 +77,48 @@
         <label for="vest_kirsch">Vest</label><br/>
         <input type="submit" id="exec_kirsch" value="Select">
     </div>
-    <li><a id="min_filt">Min Filter</a></li>
-    <li><a id="max_filt">Max Filter</a></li>
-    <li><a id="median_filt">Median Filter</a></li>
-    <li><a id="medext_filt">Mean Filter</a></li>
-    <li><a id="range_filt">Range Filter</a></li>
-    <li><a id="disprange_filt">Dispersion-Range Filter</a></li>
-    <li><a id="alphamed_filt">α-Median Filter</a></li>
+    <li class="li_left"><a id="min_filt">Min Filter</a></li>
+    <li class="li_left"><a id="max_filt">Max Filter</a></li>
+    <li class="li_left"><a id="median_filt">Median Filter</a></li>
+    <li class="li_left"><a id="medext_filt">Mean Filter</a></li>
+    <li class="li_left"><a id="range_filt">Range Filter</a></li>
+    <li class="li_left"><a id="disprange_filt">Dispersion-Range Filter</a></li>
+    <li class="li_left"><a id="alphamed_filt">α-Median Filter</a></li>
     <div id="alphamed_slider" style="font-size: 14px" hidden>
         <br/> α = <span id="outputmed"></span> <br/>
-        <input type="range" id="alphamed_value" class="ranger" min="1" max="4" value="1"><br/>
+        <input type="range" id="alphamed_value" class="slider" min="1" max="4" value="1"><br/>
         <input type="submit" id="exec_alphamed" value="Select">
     </div>
-    <li><a id="alphacom_filt">α-Complementary Filter</a></li>
+    <li class="li_left"><a id="alphacom_filt">α-Complementary Filter</a></li>
     <div id="alphacom_slider" style="font-size: 14px" hidden>
         <br/> α = <span id="outputcom"></span> <br/>
-        <input type="range" id="alphacom_value" class="ranger" min="1" max="4" value="1"><br/>
+        <input type="range" id="alphacom_value" class="slider" min="1" max="4" value="1"><br/>
         <input type="submit" id="exec_alphacom" value="Select">
     </div>
-    <li><a id="alphaqsr_filt">α-Quasi-Range Filter</a></li>
+    <li class="li_left"><a id="alphaqsr_filt">α-Quasi-Range Filter</a></li>
     <div id="alphaqsr_slider" style="font-size: 14px" hidden>
         <br/> α = <span id="outputqsr"></span> <br/>
-        <input type="range" id="alphaqsr_value" class="ranger" min="1" max="3" value="1"><br/>
+        <input type="range" id="alphaqsr_value" class="slider" min="1" max="3" value="1"><br/>
         <input type="submit" id="exec_alphaqsr" value="Select">
     </div>
-    <li><a id="artm_filt">Arithmetic Mean Filter</a></li>
-    <li><a id="geom_filt">Geometric Mean Filter</a></li>
-    <li><a id="harm_filt">Harmonic Mean Filter</a></li>
-    <li><a id="contraharm_filt">Contraharmonic-α Mean Filter</a></li>
+    <li class="li_left"><a id="artm_filt">Arithmetic Mean Filter</a></li>
+    <li class="li_left"><a id="geom_filt">Geometric Mean Filter</a></li>
+    <li class="li_left"><a id="harm_filt">Harmonic Mean Filter</a></li>
+    <li class="li_left"><a id="contraharm_filt">Contraharmonic-α Mean Filter</a></li>
     <div id="alphach_slider" style="font-size: 14px" hidden>
         <br/> α = <span id="outputch"></span> <br/>
-        <input type="range" id="alphach_value" class="ranger" min="-100" max="100" value="0"><br/>
+        <input type="range" id="alphach_value" class="slider" min="-100" max="100" value="0"><br/>
         <input type="submit" id="exec_alphach" value="Select">
     </div>
-    <li><a id="power_filt">Power-α Mean Filter</a></li>
+    <li class="li_left"><a id="power_filt">Power-α Mean Filter</a></li>
     <div id="power_opts" style="font-size: 14px" hidden>
         <br/> Selectati tipul de putere pe care vreti sa-l implementati: <br/>
         <input type="radio" id="alphapow" name="alphapow">
         <label for="alphapow">α = <span id="outputpow"></span></label><br/>
-            <input type="range" id="alphapow_value" class="ranger" min="1" max="100" value="1"><br/>
+            <input type="range" id="alphapow_value" class="slider" min="1" max="100" value="1"><br/>
         <input type="radio" id="alphapow2" name="alphapow">
         <label for="alphapow2">1/α = <span id="outputpow2"></span></label><br/>
-            <input type="range" id="alphapow2_value" class="ranger" min="1" max="100" value="1"><br/>
+            <input type="range" id="alphapow2_value" class="slider" min="1" max="100" value="1"><br/>
         <input type="submit" id="exec_alphapow" value="Select">
     </div>
 </ul>
